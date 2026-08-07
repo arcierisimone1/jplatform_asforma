@@ -68,3 +68,21 @@
   border-radius: 50px;
 
 }
+/* Sfondo footer (mappa a pallini): forza lo stiramento esatto ai bordi del
+   contenitore cosi i pallini restano visibili su entrambi i lati sempre,
+   a prescindere dal numero di colonne del footer. */
+.it-footer-area {
+    background-size: 1920px 433px !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+}
+
+
+/* Elimina il doppione: oltre allo sfondo CSS di .it-footer-area (sistemato sopra),
+   il template includeva anche un <img class="it-footer-shape-3"> con la STESSA
+   immagine sovrapposta a opacita 0.5 -> effetto "fantasma"/doppia mappa. Nascondo
+   il duplicato, resta solo lo sfondo CSS coordinato. */
+.it-footer-shape-3 {
+    display: none !important;
+}
+
