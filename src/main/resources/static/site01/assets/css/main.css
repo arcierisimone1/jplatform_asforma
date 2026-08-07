@@ -130,18 +130,18 @@
   @color declaration
   */
   --it-common-white: #ffffff;
-  --it-common-black: #1F2432;
-  --it-common-black-2: #313537;
+  --it-common-black: #0B1F3F;
+  --it-common-black-2: #0F2A52;
   --it-common-brown: #272422;
-  --it-heading-primary: #0C121D;
+  --it-heading-primary: #081729;
   --it-gray-1: #F0F4F5;
   --it-gray-2: #D9D9D9;
   --it-gray-3: #F5F7F9;
   --it-gray-4: #FFF8F4;
-  --it-text-body: #6C757D;
-  --it-theme-1: #0069BA;
+  --it-text-body: #5B6B80;
+  --it-theme-1: #00B8D9;
   --it-theme-2: #FFFFFF;
-  --it-theme-3: #3B93D6;
+  --it-theme-3: #0B1F3F;
   --it-theme-4: #5C7A99;
   --it-theme-5: #FE8235;
   --it-theme-6: #CD935A;

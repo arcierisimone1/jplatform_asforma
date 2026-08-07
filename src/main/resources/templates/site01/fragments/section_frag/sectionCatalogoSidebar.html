@@ -8,6 +8,51 @@
             <div class="row">
                 <div class="col-lg-8 pe-5 lg-pe-3 md-pe-15px md-mb-50">
                     <div th:if="${section.testo != null and !section.testo.isEmpty()}" th:utext="${section.testo}" class="mb-40"></div>
+
+                    <!-- Filtro categorie a tab (come sul vecchio sito), attivo solo se
+                         info4 = '1' per questa sezione (stesso interruttore usato dal
+                         vecchio sito su sezione.info4). Filtra via Isotope in base al
+                         campo "s4" ("Area tipologia corso") di ogni corso. -->
+                    <th:block th:if="${section.info4 == '1'}">
+                        <style>
+                            .it-catalogo-filter { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+                            .it-catalogo-filter button {
+                                border: 1px solid var(--it-theme-1);
+                                background: #fff;
+                                color: var(--it-theme-1);
+                                border-radius: 30px;
+                                padding: 8px 20px;
+                                font-size: 14px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: background .2s, color .2s;
+                            }
+                            .it-catalogo-filter button:hover { background: rgba(0,105,186,0.08); }
+                            .it-catalogo-filter button.active { background: var(--it-theme-1); color: #fff; }
+                        </style>
+                        <div class="it-catalogo-filter">
+                            <button type="button" class="active" data-filter="*">Tutti</button>
+                            <button type="button" data-filter=".Informatica">Informatica</button>
+                            <button type="button" data-filter=".Grafica_Web">Grafica e Web</button>
+                            <button type="button" data-filter=".Video_Foto">Foto e Video</button>
+                            <button type="button" data-filter=".CAD_3D">CAD e 3D</button>
+                            <button type="button" data-filter=".Soft_Skill">Soft Skill</button>
+                            <button type="button" data-filter=".Lingue_Straniere">Lingue</button>
+                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var $grid = jQuery('#grid-catalogo-corsi');
+                                if (!$grid.length) return;
+                                $grid.isotope({ itemSelector: '.isotope-item', layoutMode: 'fitRows' });
+                                jQuery('.it-catalogo-filter button').on('click', function () {
+                                    jQuery('.it-catalogo-filter button').removeClass('active');
+                                    jQuery(this).addClass('active');
+                                    $grid.isotope({ filter: jQuery(this).attr('data-filter') });
+                                });
+                            });
+                        </script>
+                    </th:block>
+
                     <div th:replace="~{site01/fragments/section_frag/_catalogoCards :: cards}"></div>
                 </div>
                 <div class="col-lg-4 ps-4 lg-ps-15px">

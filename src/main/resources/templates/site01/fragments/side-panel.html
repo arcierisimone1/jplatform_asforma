@@ -13,25 +13,6 @@
                 <p>Formazione, Consulenza e Sviluppo.</p>
             </div>
 
-            <div class="widget mb-20">
-                <h4 class="offcanva-title">Calendario corsi in partenza</h4>
-                <div class="latest-posts">
-                    <th:block th:if="${config != null and config.contenutiFront05 != null}">
-                        <th:block th:each="articolo : ${config.contenutiFront05}">
-                            <article class="post media-post clearfix pb-0 mb-20 d-flex align-items-center" style="gap:15px;">
-                                <a class="post-thumb" th:href="@{'/' + ${articolo.url}}" th:if="${articolo.relazione != null}" style="flex:0 0 60px;">
-                                    <img th:src="${config.imagesRepositoryWeb + articolo.relazione.logo}" alt="" style="width:60px;height:60px;object-fit:cover;border-radius:8px;"/>
-                                </a>
-                                <div class="post-right">
-                                    <span class="d-block small text-muted" th:text="${articolo.dataVisualizzata}">Data</span>
-                                    <h6 class="mt-0 mb-0"><a th:href="@{'/' + ${articolo.url}}" th:text="${articolo.titolo}">Titolo</a></h6>
-                                </div>
-                            </article>
-                        </th:block>
-                    </th:block>
-                </div>
-            </div>
-
             <div class="itoffcanvas__info">
                 <h3 class="offcanva-title">Contatti</h3>
                 <div class="it-info-wrapper mb-20 d-flex align-items-center">

@@ -12,16 +12,26 @@
         </div>
       </div>
 
+      <style>
+        /* card altezza uniforme: colonna flex, titolo clamp 2 righe, riassunto clamp 3 righe, bottone in fondo */
+        /* immagine altezza fissa (aspect-ratio) e object-fit:cover: cosi' tutte le foto hanno la stessa dimensione qualsiasi sia la foto originale caricata */
+        .it-blog-item-equal { display: flex; flex-direction: column; height: 100%; width: 100%; }
+        .it-blog-item-equal .it-blog-thumb { aspect-ratio: 16 / 9; }
+        .it-blog-item-equal .it-blog-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .it-blog-item-equal .it-blog-content { display: flex; flex-direction: column; flex-grow: 1; }
+        .it-blog-item-equal .it-blog-title { overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .it-blog-item-equal .it-blog-btn { margin-top: auto; }
+      </style>
       <div class="row gx-35">
-        <div class="col-xl-4 col-lg-6 col-md-6" th:each="articolo, iterStat : ${config.contenutiFront01}" th:if="${iterStat.index < 6}">
-          <div class="it-blog-item mb-35">
-            <div class="it-blog-thumb border-radius-20 mb-30 p-relative">
+        <div class="col-xl-4 col-lg-6 col-md-6 d-flex" th:each="articolo, iterStat : ${config.contenutiFront01}" th:if="${iterStat.index < 6}">
+          <div class="it-blog-item it-blog-item-equal mb-35">
+            <div class="it-blog-thumb border-radius-20 mb-20 p-relative">
               <a th:href="@{'/' + ${articolo.url}}">
-                <img class="w-100" th:src="${config.imagesRepositoryWeb + articolo.logo}" th:alt="${articolo.titolo}"/>
+                <img th:src="${config.imagesRepositoryWeb + articolo.logo}" th:alt="${articolo.titolo}"/>
               </a>
             </div>
             <div class="it-blog-content">
-              <div class="it-blog-meta mb-25">
+              <div class="it-blog-meta mb-15">
               <span>
                 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M14.25 1.60596H13.5V0.855957C13.5 0.657045 13.421 0.466279 13.2803 0.325627C13.1397 0.184975 12.9489 0.105957 12.75 0.105957C12.5511 0.105957 12.3603 0.184975 12.2197 0.325627C12.079 0.466279 12 0.657045 12 0.855957V1.60596H6V0.855957C6 0.657045 5.92098 0.466279 5.78033 0.325627C5.63968 0.184975 5.44891 0.105957 5.25 0.105957C5.05109 0.105957 4.86032 0.184975 4.71967 0.325627C4.57902 0.466279 4.5 0.657045 4.5 0.855957V1.60596H3.75C2.7558 1.60715 1.80267 2.00262 1.09966 2.70562C0.396661 3.40863 0.00119089 4.36176 0 5.35596L0 14.356C0.00119089 15.3502 0.396661 16.3033 1.09966 17.0063C1.80267 17.7093 2.7558 18.1048 3.75 18.106H14.25C15.2442 18.1048 16.1973 17.7093 16.9003 17.0063C17.6033 16.3033 17.9988 15.3502 18 14.356V5.35596C17.9988 4.36176 17.6033 3.40863 16.9003 2.70562C16.1973 2.00262 15.2442 1.60715 14.25 1.60596ZM1.5 5.35596C1.5 4.75922 1.73705 4.18692 2.15901 3.76497C2.58097 3.34301 3.15326 3.10596 3.75 3.10596H14.25C14.8467 3.10596 15.419 3.34301 15.841 3.76497C16.2629 4.18692 16.5 4.75922 16.5 5.35596V6.10596H1.5V5.35596ZM14.25 16.606H3.75C3.15326 16.606 2.58097 16.3689 2.15901 15.9469C1.73705 15.525 1.5 14.9527 1.5 14.356V7.60596H16.5V14.356C16.5 14.9527 16.2629 15.525 15.841 15.9469C15.419 16.3689 14.8467 16.606 14.25 16.606Z" fill="currentcolor"/>
@@ -32,7 +42,7 @@
               <h5 class="it-blog-title mb-15">
                 <a class="border-line" th:href="@{'/' + ${articolo.url}}" th:text="${articolo.titolo}">Titolo notizia</a>
               </h5>
-              <div class="mb-20" th:utext="${articolo.riassunto}" style="overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;">Riassunto</div>
+              <div class="mb-15" th:utext="${articolo.riassunto}" style="overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;">Riassunto</div>
               <div class="it-blog-btn">
                 <a th:href="@{'/' + ${articolo.url}}" class="it-btn-yellow">
                 <span>

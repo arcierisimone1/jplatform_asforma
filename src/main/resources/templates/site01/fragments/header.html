@@ -88,33 +88,25 @@
 
         <div id="header-sticky" class="it-header-area it-header-ptb p-relative">
             <div class="container">
-                <!-- Riga unica: logo + menu + ricerca (solo icona, si apre al click) + CTA,
-                     come nell'header originale del sito, con le 6 nuove voci di menu. -->
                 <div class="row align-items-center flex-nowrap">
                     <div class="col-auto">
                         <div class="it-header-logo">
-                            <!-- Il file logo_principale.png è ad alta risoluzione: senza una
-                                 larghezza massima esplicita, in una colonna "col-auto" (che si
-                                 adatta al contenuto) veniva mostrato a piena grandezza nativa. -->
-                            <a th:href="@{/}"><img th:src="@{/site01/images/logo_principale.png}" alt="Studiodomino Formazione" style="max-width:220px; width:100%; height:auto;"/></a>
+                            <a th:href="@{/}"><img th:src="@{/site01/images/ASFORMA.png}" alt="Studiodomino Formazione" style="max-width:220px; width:100%; height:auto;"/></a>
                         </div>
                     </div>
                     <div class="col d-none d-xl-block">
                         <div class="it-header-menu it-header-dropdown">
                             <style>
-                                /* Su una sola riga insieme a logo, ricerca e CTA, 6 voci di menu
-                                   (con "Orientamento Professionale" piuttosto lungo) hanno bisogno
-                                   di margini e font più stretti dei 19px/16px di default del tema. */
-                                .it-header-dropdown .it-nav-menu { display: flex; flex-wrap: nowrap; justify-content: flex-end; padding-left: 0; }
-                                .it-header-dropdown .it-nav-menu > li { margin: 0 9px; }
-                                .it-header-dropdown .it-nav-menu > li > a { white-space: nowrap; font-size: 14px; }
+                                .it-header-dropdown .it-nav-menu { display: flex; flex-wrap: nowrap; justify-content: center; padding-left: 30px; margin-right: -40px; }
+                                .it-header-dropdown .it-nav-menu > li { margin: 0 12px; }
+                                .it-header-dropdown .it-nav-menu > li > a { white-space: nowrap; font-size: 16px; }
                                 .it-search-expand { display: none; }
                                 .it-search-expand.is-open { display: block !important; }
                             </style>
                             <nav class="it-menu-content">
                                 <ul class="it-nav-menu" th:if="${config != null and config.sezioniFront != null}">
 
-                                    <th:block th:each="sezione : ${config.sezioniFront}">
+                                    <th:block th:each="sezione : ${config.sezioniFront}" th:if="${sezione.id == null or sezione.id != 370}">
 
                                         <!-- MENU1=1: voce semplice, solo link -->
                                         <li class="menu-item" th:if="${sezione.menu1.toString() == '1'}">

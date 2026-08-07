@@ -15,8 +15,13 @@
                 </div>
             </div>
 
+            <style>
+                /* card altezza uniforme: colonna flex, titolo/testo clamp righe fisse */
+                .it-choose-2-item { display: flex; flex-direction: column; }
+                .it-choose-2-item .it-choose-2-title { overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+            </style>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-35" th:if="${section.hasContenuti()}">
-                <div class="col mb-35" th:each="articolo : ${section.contenuti}">
+                <div class="col mb-35 d-flex" th:each="articolo : ${section.contenuti}">
                     <div class="it-choose-2-item h-100">
                         <span class="it-choose-2-icon">
                             <i class="fa-solid fa-circle-check" style="font-size:32px; color: var(--it-theme-2);"></i>
@@ -24,15 +29,8 @@
                         <h5 class="it-choose-2-title" style="font-size:20px;">
                             <a th:href="@{'/' + ${articolo.url}}" class="border-line" th:text="${articolo.titolo}">Titolo</a>
                         </h5>
-                        <div th:if="${articolo.riassunto != null and !articolo.riassunto.isEmpty()}" th:utext="${articolo.riassunto}">Descrizione</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" th:if="${!section.hasContenuti()}">
-                <div class="col-lg-10 col-xl-9 mx-auto">
-                    <div class="alert alert-light text-center">
-                        Nessun contenuto disponibile al momento.
+                        <div th:if="${articolo.riassunto != null and !articolo.riassunto.isEmpty()}" th:utext="${articolo.riassunto}"
+                             style="overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;">Descrizione</div>
                     </div>
                 </div>
             </div>

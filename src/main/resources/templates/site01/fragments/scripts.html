@@ -35,6 +35,10 @@
 <script th:src="@{|/${config.sito.path2}/js/components/leaflet/leaflet.js|}"></script>
 <script th:src="@{|/${config.sito.path2}/js/scuole.js|}"></script>
 
+<!-- Isotope: filtro categorie a tab sulla pagina "Catalogo Corsi di Formazione"
+     (stesso comportamento del vecchio sito, vedi sectionCatalogoSidebar.html) -->
+<script th:src="@{|/${config.sito.path2}/js/vendors/isotope.pkgd.js|}"></script>
+
 <!-- WOW.js: anima gli elementi con classe "wow" (es. "wow itfadeUp") quando
      entrano nel viewport, riprendendo le stesse animazioni Educeet
      (custom-animation.css, già incluso in head.html). Riusa il file già

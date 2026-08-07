@@ -27,24 +27,9 @@
                 </div>
             </div>
 
-            <div class="row" th:if="${section.gallery == null or section.gallery.isEmpty()}">
-                <div class="col-lg-10 col-xl-9 mx-auto">
-                    <div class="alert alert-light text-center">
-                        Nessuna immagine disponibile al momento in questa galleria.
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
-    <!-- ============================================
-         IL NOSTRO TEAM (solo sezione "L'azienda", id 313)
-         Stesso blocco di sectionWebSidebar.html: griglia "Instructors" di
-         Educeet (TeamOne.tsx), dati presi dagli Amministratori del gestionale
-         (stessa fonte/foto di /admin/amministratori), valorizzato da
-         FrontController solo per questa sezione.
-         ============================================ -->
     <section class="it-team-area gray-bg pt-80 pb-90 z-index-1" th:if="${team != null and !team.isEmpty()}">
         <div class="container">
 

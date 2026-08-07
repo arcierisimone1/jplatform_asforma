@@ -105,9 +105,6 @@
             <th:block th:replace="~{site01/fragments/section_frag/sectionTeam :: content}"></th:block>
         </th:block>
 
-        <!-- Fallback diagnostico: se nessun case corrisponde, prima la pagina restava
-             completamente bianca senza nessun indizio del perché. Mostriamo il valore
-             tecnico reale così è immediato capire quale stringa manca dallo switch. -->
         <th:block th:case="*">
             <div class="container pt-50 pb-100 text-center">
                 <div class="alert alert-warning d-inline-block">

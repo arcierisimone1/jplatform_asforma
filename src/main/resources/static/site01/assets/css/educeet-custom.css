@@ -1,3 +1,12 @@
+/* Palette AS Forma — Verde petrolio (sovrascrive il tema Educeet di default) */
+:root {
+    --it-theme-1: #14524A; /* verde petrolio - colore primario */
+    --it-theme-3: #0A2E29; /* verde petrolio scuro - sfondi/testi scuri */
+    --it-theme-4: #7C948F; /* grigio-verde neutro */
+    --it-theme-5: #2E7D72; /* verde petrolio chiaro - accento secondario */
+    --it-theme-6: #1D6359; /* verde petrolio medio - accento terziario */
+}
+
 .it-about-experience-box h5 span {
     font-size: 40px !important;
 }
@@ -24,12 +33,12 @@
 
 
 .slider-range div {
-    background: #03594e !important;
+    background: #14524A !important;
 }
 
 
 .it-shop-widget-filter-btn {
-    background: #03594e;
+    background: #14524A;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -46,7 +55,7 @@
   bottom: -5px;
   left: 0;
   height: 3px;
-  background-color: #FE8235 !important; /* or your active tab color */
+  background-color: #2E7D72 !important; /* or your active tab color */
   transition: all 0.3s ease;
   display: none; /* hidden initially, JS will show it */
 }
@@ -55,7 +64,7 @@
   z-index: 1;
   position: relative;
   color: var(--it-common-white);
-  background-color: #FE8235 !important;
+  background-color: #2E7D72 !important;
   border-radius: 50px;
 
 }

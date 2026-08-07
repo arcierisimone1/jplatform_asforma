@@ -9,9 +9,15 @@
 
             <div th:if="${section.testo != null and !section.testo.isEmpty()}" th:utext="${section.testo}" class="mb-40"></div>
 
+            <style>
+                /* card altezza uniforme: colonna flex, titolo clamp 2 righe, testo clamp 3 righe */
+                .it-course-item-equal { display: flex; flex-direction: column; height: 100%; width: 100%; }
+                .it-course-item-equal .it-course-content { display: flex; flex-direction: column; flex-grow: 1; }
+                .it-course-item-equal .it-course-title { overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+            </style>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-35" th:if="${section.hasSubsections()}">
-                <div class="col mb-35" th:each="sub : ${section.subsection}">
-                    <div class="it-course-item">
+                <div class="col mb-35 d-flex" th:each="sub : ${section.subsection}">
+                    <div class="it-course-item it-course-item-equal">
                         <div class="it-course-thumb z-index-1 border-radius-20" th:if="${sub.logo != null and !sub.logo.isEmpty()}">
                             <a th:href="@{'/' + ${sub.url}}">
                                 <img class="w-100" th:src="${config.imagesRepositoryWeb + sub.logo}" th:alt="${sub.titolo}"/>
@@ -21,15 +27,14 @@
                             <h5 class="it-course-title mb-20">
                                 <a class="border-line" th:href="@{'/' + ${sub.url}}" th:text="${sub.titolo}">Sottosezione</a>
                             </h5>
-                            <div class="mb-0" th:if="${sub.riassunto != null and !sub.riassunto.isEmpty()}" th:utext="${sub.riassunto}">Descrizione</div>
+                            <div class="mb-0"
+                                 th:if="${sub.riassunto != null and !sub.riassunto.isEmpty()}" th:utext="${sub.riassunto}"
+                                 style="overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;">Descrizione</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="alert alert-light text-center" th:if="${!section.hasSubsections()}">
-                Nessuna sottosezione disponibile al momento.
-            </div>
         </div>
     </section>
 </th:block>

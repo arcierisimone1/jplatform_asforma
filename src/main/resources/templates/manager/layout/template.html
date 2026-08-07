@@ -94,21 +94,22 @@
     (function() {
     const WARNING_MS = 9 * 60 * 1000;
     const EXPIRE_MS  = 10 * 60 * 1000;
-    let warningTimer, expireTimer;
+    let warningTimer, expireTimer, countdownInterval;
 
     function resetTimers() {
         clearTimeout(warningTimer);
         clearTimeout(expireTimer);
+        clearInterval(countdownInterval);
 
         warningTimer = setTimeout(function() {
             document.getElementById('sessionWarningModal').style.display = 'flex';
             let remaining = 60;
             const countdown = document.getElementById('sessionCountdown');
             countdown.textContent = remaining;
-            const interval = setInterval(function() {
+            countdownInterval = setInterval(function() {
                 remaining--;
                 countdown.textContent = remaining;
-                if (remaining <= 0) clearInterval(interval);
+                if (remaining <= 0) clearInterval(countdownInterval);
             }, 1000);
         }, WARNING_MS);
 
@@ -120,10 +121,24 @@
     resetTimers();
 
     window.keepSession = function() {
-        fetch('/admin/ping').then(function() {
-            document.getElementById('sessionWarningModal').style.display = 'none';
-            resetTimers();
-        });
+        // annulla subito lo scadere della sessione, prima ancora che il ping
+        // risponda: altrimenti, cliccando "sì" negli ultimi secondi, il round-trip
+        // di rete potrebbe far scattare comunque l'expireTimer prima del clearTimeout
+        clearTimeout(warningTimer);
+        clearTimeout(expireTimer);
+        clearInterval(countdownInterval);
+        document.getElementById('sessionWarningModal').style.display = 'none';
+
+        fetch('/admin/ping', { credentials: 'same-origin' })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('ping fallito: ' + response.status);
+                }
+                resetTimers();
+            })
+            .catch(function() {
+                window.location.href = '/logout';
+            });
     };
 })();
 </script>
@@ -145,7 +160,7 @@
             <button class="btn btn-primary" onclick="keepSession()">
                 Sì, mantieni sessione
             </button>
-            <button class="btn btn-secondary" onclick="window.location.href='/admin/logout'">
+            <button class="btn btn-secondary" onclick="window.location.href='/logout'">
                 No, esci
             </button>
         </div>

@@ -81,7 +81,7 @@ public class LoginController {
 
         if (utente == null) {
             log.warn("✗ Login fallito per: {}", username);
-            model.addAttribute("error", "Credenziali non valide");
+            model.addAttribute("erroreLogin", "Credenziali errate. Riprova.");
             model.addAttribute("config", configCore);
             return "auth/login";
         }

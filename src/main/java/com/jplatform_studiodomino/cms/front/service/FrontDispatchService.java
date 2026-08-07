@@ -401,6 +401,25 @@ public class FrontDispatchService {
                 if (document.getGalleryString() != null && !document.getGalleryString().isEmpty()) {
                     document.setGallery(parseGalleryString(document.getGalleryString()));
                 }
+                // ===== RELAZIONE (campo "l3") =====
+                // Sul vecchio sito Struts, un corso "a calendario" (una data specifica)
+                // non aveva quasi mai un proprio testo/programma: la pagina mostrava
+                // sempre il contenuto del corso "a catalogo" collegato (post.relazione).
+                // Il collegamento e' gia' salvato nel campo l3 per molti corsi (era gia'
+                // valorizzato in fase di migrazione, semplicemente mai letto dal sito
+                // nuovo). Qui lo carichiamo, se presente e diverso dal documento stesso.
+                try {
+                    String l3 = document.getL3();
+                    if (l3 != null && !l3.isBlank() && !"0".equals(l3.trim())) {
+                        Integer relazioneId = Integer.parseInt(l3.trim());
+                        if (!relazioneId.equals(id)) {
+                            contentService.findDatiBaseById(relazioneId)
+                                    .ifPresent(document::setRelazione);
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    log.debug("Campo l3 non numerico per documento {}: '{}'", id, document.getL3());
+                }
             }
             return document;
         } catch (NumberFormatException e) {

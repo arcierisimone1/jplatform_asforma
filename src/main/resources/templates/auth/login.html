@@ -35,10 +35,6 @@
                     <br>
                     <h4 class="text-center f-w-500 my-4">Accesso Utente J-Platform</h4>
 
-                    <div th:if="${erroreLogin}" class="alert alert-danger" role="alert">
-                        <i class="ti ti-alert-circle me-1"></i>
-                        <span th:text="${erroreLogin}"></span>
-                    </div>
                     <div th:if="${param.error != null}" class="alert alert-danger" role="alert">
                         <i class="ti ti-alert-circle me-1"></i>
                         Credenziali non valide. Riprovare.
@@ -63,6 +59,10 @@
                             <input type="password" class="form-control" id="password"
                                    name="password" placeholder="Inserisci password"
                                    required autocomplete="off" />
+                            <div th:if="${erroreLogin}" class="small mt-1" style="color:#dc3545;">
+                                <i class="ti ti-alert-circle me-1" style="color:#dc3545;"></i>
+                                <span th:text="${erroreLogin}" style="color:#dc3545;"></span>
+                            </div>
                         </div>
 
                         <div class="mb-3" th:if="${twoFactorEnabled}">

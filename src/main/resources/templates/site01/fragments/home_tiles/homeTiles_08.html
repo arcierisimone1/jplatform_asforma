@@ -1,63 +1,26 @@
 <th:block xmlns:th="http://www.thymeleaf.org" th:fragment="homeTiles_08">
-  <section class="it-categories-area theme-bg pt-130 pb-130">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-8">
-          <div class="it-categories-section-title-box mb-45">
-            <span class="it-section-subtitle yellow-style">Servizi</span>
-            <h4 class="it-section-title text-white">Servizi ITC</h4>
-          </div>
-          <div class="row row-cols-md-2 row-cols-1 gx-35">
-
-            <div class="col mb-35">
-              <div class="it-categories-item item-style-1">
-                <span><i class="fab fa-internet-explorer font-48"></i></span>
-                <p class="text-white mb-0" style="margin-top:15px;">Realizzazione siti web su misura per la tua azienda. Progettazione e sviluppo di programmi gestionali personalizzati.</p>
-              </div>
+    <section class="pt-80 pb-40">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5">
+                    <div style="position:relative; border-radius:26px; overflow:hidden; box-shadow:0 25px 50px rgba(1,6,20,0.15); aspect-ratio:4/5; background:radial-gradient(ellipse at 50% 120%, #0f6f8c 0%, #0a3a5c 30%, #061c3a 60%, #010712 90%); display:flex; align-items:center; justify-content:center;">
+                        <img th:src="@{/site01/images/ludum-logo-badge.png}" alt="LUDUM" style="width:60%; height:auto; filter:drop-shadow(0 0 30px rgba(15,200,210,0.5));"/>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <span class="it-section-subtitle">Presentazione</span>
+                    <h4 class="it-section-title mb-25">Il mondo <span class="z-index-1">LUDUM</span></h4>
+                    <p style="text-align: justify; font-size:16px; line-height:1.7;"><strong>LUDUM</strong> fornisce a bambini e ragazzi un servizio di ludoteca educativa che ha come attività principale il gioco, in particolare tecnologico: robotica, realtà aumentata, realtà virtuale e tanto altro da scoprire.</p>
+                    <p style="text-align: justify; font-size:16px; line-height:1.7;">Nelle diverse attività, libere o organizzate, si facilita il naturale sviluppo di conoscenze e competenze cognitive, sociali ed emotive.</p>
+                    <p style="text-align: justify; font-size:16px; line-height:1.7;">LUDUM è un luogo di scambio culturale e intergenerazionale che favorisce la comunicazione, la solidarietà e la conoscenza, per aiutare bambini e ragazzi a trovare una loro identità e a crescere in modo più autonomo e sereno.</p>
+                    <a href="#" class="it-btn-yellow theme-bg mt-15" style="display:inline-flex;">
+                        <span>
+                            <span class="text-1">Scopri di più</span>
+                            <span class="text-2">Scopri di più</span>
+                        </span>
+                    </a>
+                </div>
             </div>
-
-            <div class="col mb-35">
-              <div class="it-categories-item item-style-2">
-                <span><i class="fas fa-laptop-code font-48"></i></span>
-                <p class="text-white mb-0" style="margin-top:15px;">Assistenza tecnica hardware e software per le aziende e per la Pubblica Amministrazione.</p>
-              </div>
-            </div>
-
-            <div class="col mb-35">
-              <div class="it-categories-item item-style-3">
-                <span><i class="fas fa-mail-bulk font-48"></i></span>
-                <p class="text-white mb-0" style="margin-top:15px;">Rilascio e attivazione dei servizi digitali per aziende e cittadini: firma digitale, posta elettronica certificata - PEC.</p>
-              </div>
-            </div>
-
-            <div class="col mb-35">
-              <div class="it-categories-item item-style-4">
-                <span><i class="fas fa-share-alt font-48"></i></span>
-                <p class="text-white mb-0" style="margin-top:15px;">Web & Social Communication - Servizi di gestione profili social, aggiornamento contenuti e tecniche SEO.</p>
-              </div>
-            </div>
-
-            <div class="col mb-35">
-              <div class="it-categories-item item-style-5">
-                <span><i class="fas fa-keyboard font-48"></i></span>
-                <p class="text-white mb-0" style="margin-top:15px;">Servizi di trascrizione e resocontazione di documenti audio per la Pubblica Amministrazione.</p>
-              </div>
-            </div>
-
-            <div class="col mb-35">
-              <div class="it-categories-item item-style-6">
-                <span><i class="far fa-list-alt font-48"></i></span>
-                <p class="text-white mb-0" style="margin-top:15px;">Servizi di Conservazione Sostitutiva e Fatturazione Elettronica.</p>
-              </div>
-            </div>
-
-          </div>
         </div>
-
-        <!--div class="col-lg-4">
-          <div th:replace="~{site01/fragments/jspUser/contatti3 :: contatti3(oggettoRichiesta='Informazioni generali', idOggettoRichiesta=0)}"></div>
-        </div-->
-      </div>
-    </div>
-  </section>
+    </section>
 </th:block>

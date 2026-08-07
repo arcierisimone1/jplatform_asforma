@@ -10,9 +10,16 @@
 
                     <div th:if="${section.testo != null and !section.testo.isEmpty()}" th:utext="${section.testo}" class="mb-40"></div>
 
+                    <style>
+                        /* card altezza uniforme: colonna flex, titolo clamp 2 righe, pulsante in fondo */
+                        .it-blog-item-equal { display: flex; flex-direction: column; height: 100%; width: 100%; }
+                        .it-blog-item-equal .it-blog-content { display: flex; flex-direction: column; flex-grow: 1; }
+                        .it-blog-item-equal .it-blog-title { overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+                        .it-blog-item-equal .it-blog-btn { margin-top: auto; }
+                    </style>
                     <div class="row gx-35" th:if="${section.hasContenuti()}">
-                        <div class="col-lg-6 col-md-6" th:each="articolo : ${section.contenuti}">
-                            <div class="it-blog-item mb-35">
+                        <div class="col-lg-6 col-md-6 d-flex" th:each="articolo : ${section.contenuti}">
+                            <div class="it-blog-item it-blog-item-equal mb-35">
                                 <div class="it-blog-thumb border-radius-20 mb-30 p-relative">
                                     <a th:href="@{'/' + ${articolo.url}}">
                                         <img class="w-100" th:src="${config.imagesRepositoryWeb + articolo.logo}" th:alt="${articolo.titolo}"/>
@@ -39,9 +46,6 @@
 
                     <div th:replace="~{site01/fragments/section_frag/_pagination :: nav}"></div>
 
-                    <div class="alert alert-light text-center" th:if="${!section.hasContenuti()}">
-                        Nessuna notizia disponibile al momento.
-                    </div>
                 </div>
 
                 <div class="col-lg-4 ps-4 lg-ps-15px">

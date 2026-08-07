@@ -108,7 +108,19 @@
         // =========================
         if (window.jQuery && typeof jQuery.fn.euCookieLawPopup === "function") {
             try {
-                jQuery(document).euCookieLawPopup();
+                jQuery(document).euCookieLawPopup().init({
+                    cookiePolicyUrl: "/front/35/Privacy_Policy",
+                    popupPosition: "bottom",
+                    colorStyle: "default",
+                    compactStyle: false,
+                    popupTitle: "Questo sito utilizza i cookie",
+                    popupText: "Utilizziamo cookie tecnici necessari al funzionamento del sito e, previo consenso, cookie statistici e di profilazione. Continuando la navigazione o cliccando \"Accetta\" acconsenti al loro utilizzo.",
+                    buttonContinueTitle: "Accetta",
+                    buttonLearnmoreTitle: "Leggi l'informativa",
+                    buttonLearnmoreOpenInNewWindow: true,
+                    agreementExpiresInDays: 30,
+                    autoAcceptCookiePolicy: false
+                });
             } catch (e) {
                 console.warn("Cookie popup non inizializzato:", e);
             }

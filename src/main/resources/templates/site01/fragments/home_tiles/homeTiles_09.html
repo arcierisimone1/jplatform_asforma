@@ -1,78 +1,108 @@
 <th:block xmlns:th="http://www.thymeleaf.org" th:fragment="homeTiles_09">
-  <!-- Section: SERVIZI ICT -->
-  <section class="layer-overlay overlay-dark-9 d-none d-sm-block" th:attr="data-tm-bg-img=@{/images/bg/bg1.jpg}">
-    <div class="container">
-      <div class="section-content">
-        <div class="row align-items-center">
-          <div class="col-md-12 col-md-8 col-lg-8 col-xl-8">
-            <h2 class="text-white text-uppercase font-size-84 font-weight-800 pl-10 mt-0 mb-60 line-height-1">
-              <span class="text-theme-colored1">Servizi</span> ITC
-            </h2>
+    <section class="it-categories-area pt-40 pb-95">
+        <div class="container">
             <div class="row">
-              <div class="col-sm-6">
-                <div class="tm-sc-icon-box icon-box icon-left tm-iconbox-icontype-font-icon text-left iconbox-centered-in-responsive iconbox-theme-colored1 icon-position-icon-left mb-60">
-                  <div class="icon-box-wrapper">
-                    <a class="icon icon-type-font-icon icon-circled icon-gray icon-theme-colored1" th:href="@{/page/1/376/1/2020/Software_gestionale}"><i class="fab fa-internet-explorer"></i></a>
-                    <div class="icon-text"><p class="text-white mb-0">Realizzazione siti web su misura per la tua azienda. Progettazione e sviluppo di programmi gestionali personalizzati.</p></div>
-                    <div class="clearfix"></div>
-                  </div>
+                <div class="col-12">
+                    <div class="it-categories-section-title-box text-center mb-50">
+                        <span class="it-section-subtitle">L'associazione</span>
+                        <h4 class="it-section-title">Le nostre <span class="z-index-1">aree</span></h4>
+                    </div>
                 </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="tm-sc-icon-box icon-box icon-left tm-iconbox-icontype-font-icon text-left iconbox-centered-in-responsive iconbox-theme-colored1 icon-position-icon-left mb-60">
-                  <div class="icon-box-wrapper">
-                    <a class="icon icon-type-font-icon icon-circled icon-gray icon-theme-colored1" th:href="@{/page/1/381/1/2020/Assistenza_hardware_e_software}"><i class="fas fa-laptop-code"></i></a>
-                    <div class="icon-text"><p class="text-white mb-0">Assistenza tecnica hardware e software per le aziende e per la Pubblica Amministrazione.</p></div>
-                    <div class="clearfix"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="tm-sc-icon-box icon-box icon-left tm-iconbox-icontype-font-icon text-left iconbox-centered-in-responsive iconbox-theme-colored1 icon-position-icon-left mb-60">
-                  <div class="icon-box-wrapper">
-                    <a class="icon icon-type-font-icon icon-circled icon-gray icon-theme-colored1" th:href="@{/page/1/393/1/2020/Aruba_PEC_-_Firma_digitale_-_SPID}"><i class="fas fa-mail-bulk"></i></a>
-                    <div class="icon-text"><p class="text-white mb-0">Rilascio e attivazione dei servizi digitali per aziende e cittadini: firma digitale, posta elettronica certificata - PEC.</p></div>
-                    <div class="clearfix"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="tm-sc-icon-box icon-box icon-left tm-iconbox-icontype-font-icon text-left iconbox-centered-in-responsive iconbox-theme-colored1 icon-position-icon-left mb-60">
-                  <div class="icon-box-wrapper">
-                    <a class="icon icon-type-font-icon icon-circled icon-gray icon-theme-colored1" th:href="@{/page/1/389/1/2020/SEO_&_Social_Media_Marketing}"><i class="fas fa-share-alt"></i></a>
-                    <div class="icon-text"><p class="text-white mb-0">Web & Social Communication - Servizi di gestione profili social, aggiornamento contenuti e tecniche SEO.</p></div>
-                    <div class="clearfix"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="tm-sc-icon-box icon-box icon-left tm-iconbox-icontype-font-icon text-left iconbox-centered-in-responsive iconbox-theme-colored1 icon-position-icon-left mb-60">
-                  <div class="icon-box-wrapper">
-                    <a class="icon icon-type-font-icon icon-circled icon-gray icon-theme-colored1" th:href="@{/page/1/395/1/2020/Resocontazioni_e_Trascrizioni}"><i class="fas fa-keyboard"></i></a>
-                    <div class="icon-text"><p class="text-white mb-0">Servizi di trascrizione e resocontazione di documenti audio per la Pubblica Amministrazione.</p></div>
-                    <div class="clearfix"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="tm-sc-icon-box icon-box icon-left tm-iconbox-icontype-font-icon text-left iconbox-centered-in-responsive iconbox-theme-colored1 icon-position-icon-left mb-60">
-                  <div class="icon-box-wrapper">
-                    <a class="icon icon-type-font-icon icon-circled icon-gray icon-theme-colored1" th:href="@{/page/1/394/1/2020/Conservazione_sostitutiva}"><i class="far fa-list-alt"></i></a>
-                    <div class="icon-text"><p class="text-white mb-0">Servizi di Conservazione Sostitutiva e Fatturazione Elettronica.</p></div>
-                    <div class="clearfix"></div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-          <!--div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-            TODO: contenuto di ../jspUser/_contatti3.jsp -- mandami quel file, non l'ho ancora convertito
-                 (nota: qui il JSP usa _contatti3.jsp, mentre in homeTiles_03 era _contatti2.jsp -- probabilmente
-                 sono due varianti diverse del modulo di richiesta informazioni, non un errore)
-            <div th:replace="~{site01/fragments/jspUser/contatti3 :: contatti3(oggettoRichiesta='Informazioni generali', idOggettoRichiesta=0)}"></div>
-          </div-->
+
+            <style>
+                .area-card {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    padding: 32px 26px;
+                    background: #fff;
+                    border: 1px solid #e6e6e6;
+                    border-radius: 14px;
+                    text-decoration: none;
+                    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+                }
+                .area-card:hover {
+                    transform: translateY(-6px);
+                    box-shadow: 0 20px 40px rgba(1,6,20,0.10);
+                    border-color: transparent;
+                }
+                .area-card .icon-badge {
+                    width: 62px;
+                    height: 62px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 24px;
+                    color: #fff;
+                    background: var(--it-theme-1);
+                    margin-bottom: 20px;
+                }
+                .area-card h6 {
+                    font-weight: 800;
+                    font-size: 17px;
+                    margin: 0 0 10px;
+                    color: var(--it-theme-3, #1a1a1a);
+                }
+                .area-card p {
+                    font-size: 14px;
+                    line-height: 1.6;
+                    color: #5c5c5c;
+                    margin: 0 0 18px;
+                    flex-grow: 1;
+                }
+                .area-card .cta {
+                    font-size: 13px;
+                    font-weight: 700;
+                    color: var(--it-theme-1);
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                .area-card .cta i { transition: transform .25s ease; }
+                .area-card:hover .cta i { transform: translateX(4px); }
+            </style>
+
+            <div class="row gy-4">
+
+                <div class="col-lg-3 col-md-6">
+                    <a href="#" class="area-card">
+                        <span class="icon-badge"><i class="fa-solid fa-chalkboard-user"></i></span>
+                        <h6>Formazione</h6>
+                        <p>Percorsi formativi, corsi e attività di crescita per persone e comunità.</p>
+                        <span class="cta">Scopri di più <i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <a href="#" class="area-card">
+                        <span class="icon-badge"><i class="fa-solid fa-user-graduate"></i></span>
+                        <h6>Giovani</h6>
+                        <p>Attività dedicate a ragazzi e ragazze, tra crescita personale e socialità.</p>
+                        <span class="cta">Scopri di più <i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <a href="#" class="area-card">
+                        <span class="icon-badge" style="background: var(--it-theme-5);"><i class="fa-solid fa-people-roof"></i></span>
+                        <h6>Famiglie</h6>
+                        <p>Iniziative pensate per coinvolgere genitori e figli insieme.</p>
+                        <span class="cta">Scopri di più <i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <a href="#" class="area-card">
+                        <span class="icon-badge"><i class="fa-solid fa-diagram-project"></i></span>
+                        <h6>Progetti</h6>
+                        <p>I nostri progetti: obiettivi, destinatari, partner e risultati.</p>
+                        <span class="cta">Scopri di più <i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+                </div>
+
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 </th:block>

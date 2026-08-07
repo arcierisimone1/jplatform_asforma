@@ -41,35 +41,122 @@
                 }
                 .it-subsectionlist-testo img { max-width: 100%; height: auto; }
 
-                /* Le classi Bootstrap "row-cols-*" non esistono in questa build di
-                   bootstrap.min.css (rimosse/purge), quindi non garantivano nessuna
-                   larghezza/allineamento alle card: bastava un'immagine con proporzioni
-                   diverse dalle altre (es. il badge del certificato C2) per far
-                   comportare quella card in modo imprevedibile. Griglia CSS esplicita,
-                   più altezza fissa sull'immagine, cosi tutte le card sono identiche
-                   indipendentemente dal file caricato. */
                 .it-subsectionlist-grid {
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
                     gap: 35px;
                 }
-                @media (max-width: 991px) {
-                    .it-subsectionlist-grid { grid-template-columns: repeat(2, 1fr); }
-                }
-                @media (max-width: 575px) {
-                    .it-subsectionlist-grid { grid-template-columns: 1fr; }
+                .it-subsectionlist-grid > div {
+                    flex: 0 1 340px;
+                    max-width: 340px;
                 }
                 .it-subsectionlist-grid .it-course-thumb img {
                     width: 100%;
                     height: 200px;
                     object-fit: cover;
                 }
+                /* card altezza uniforme: colonna flex, titolo/testo clamp righe fisse */
+                .it-subsectionlist-grid > div { display: flex; }
+                .it-subsectionlist-grid .it-course-item { display: flex; flex-direction: column; width: 100%; }
+                .it-subsectionlist-grid .it-course-content { display: flex; flex-direction: column; flex-grow: 1; }
+                .it-subsectionlist-grid .it-course-title { overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
             </style>
 
             <div class="row">
                 <div class="col-lg-10 col-xl-9 mx-auto">
-                    <div th:if="${section.testo != null and !section.testo.isEmpty()}"
+                    <div th:if="${section.testo != null and !section.testo.isEmpty() and (section.id == null or section.id != 338)}"
                          class="it-subsectionlist-testo mb-30" th:utext="${section.testo}"></div>
+                </div>
+            </div>
+
+            <div th:if="${section.id != null and section.id == 338}" class="mb-10">
+                <div class="row align-items-center mb-50">
+                    <div class="col-lg-8">
+                        <h2 class="mb-15">Formazione per il mondo scuola</h2>
+                        <h5 class="mb-20">Corsi di formazione per docenti ed aspiranti docenti</h5>
+                        <p>I corsi di Studiodomino Formazione Mondo Scuola destinati al personale docente hanno ottenuto l'accreditamento da parte del MIUR secondo la Direttiva n.170/2016.</p>
+                        <p class="mb-0">I docenti di ruolo, tramite la Piattaforma S.O.F.I.A., potranno iscriversi direttamente a tutti i nostri corsi e pagarli anche con la Carta del Docente. I corsi di aggiornamento sono riconosciuti dal MIUR. La frequenza ai corsi di formazione per docenti dà diritto al rilascio dell'attestato di partecipazione riconosciuto dal MIUR e valido ai fini della formazione obbligatoria docenti.</p>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <div class="border-radius-20 p-30" style="background:#f8f9fa;">
+                            <img src="https://www.studiodominoweb.com/cmss2020/cms-repository/images/1995_immagine.png" alt="Riconoscimento MIUR" style="max-width:150px; width:100%; height:auto; margin-bottom:15px;">
+                            <h5 class="mb-10">Riconoscimento MIUR</h5>
+                            <p class="mb-0">Corsi riconosciuti dal MIUR</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="mb-15 text-center">Offerta formativa</h3>
+                <p class="mb-40">Organizziamo corsi di preparazione agli esami di certificazione rivolti a studenti, corsi di formazione per i docenti e corsi di potenziamento della lingua inglese. I corsi sono destinati ad aiutare gli studenti a raggiungere obiettivi pratici e comunicativi per apprendere una lingua il più naturale e spontanea possibile. La formazione è incentrata su una conoscenza pratica della lingua piuttosto che su quella astratta: la maggior parte delle attività è incentrata sull'uso della lingua, lavorando sulla grammatica e sul vocabolario, in modo da apprendere in minor tempo possibile e comunicare efficacemente.</p>
+
+                <div class="row gx-35 mb-30">
+                    <div class="col-md-6 mb-35">
+                        <div class="d-flex align-items-start">
+                            <span class="d-inline-flex align-items-center justify-content-center flex-shrink-0 rounded-circle text-white me-20" style="width:54px; height:54px; background: var(--it-theme-1);">
+                                <i class="fa-solid fa-baby" style="font-size:22px;"></i>
+                            </span>
+                            <div>
+                                <h5 class="mb-10" style="cursor:default;">Baby Language School</h5>
+                                <p class="mb-0">Corsi per bambini dai 4 ai 6 anni. Imparare le lingue con il gioco.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-35">
+                        <div class="d-flex align-items-start">
+                            <span class="d-inline-flex align-items-center justify-content-center flex-shrink-0 rounded-circle text-white me-20" style="width:54px; height:54px; background: var(--it-theme-1);">
+                                <i class="fa-solid fa-child" style="font-size:22px;"></i>
+                            </span>
+                            <div>
+                                <h5 class="mb-10" style="cursor:default;">Children Language School</h5>
+                                <p class="mb-0">Corsi per bambini dai 6 agli 11 anni. Strutturati per imparare la lingua tra gioco e didattica.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-35">
+                        <div class="d-flex align-items-start">
+                            <span class="d-inline-flex align-items-center justify-content-center flex-shrink-0 rounded-circle text-white me-20" style="width:54px; height:54px; background: var(--it-theme-1);">
+                                <i class="fa-solid fa-user-graduate" style="font-size:22px;"></i>
+                            </span>
+                            <div>
+                                <h5 class="mb-10" style="cursor:default;">Young Language School</h5>
+                                <p class="mb-0">Corsi per ragazzi delle scuole medie e superiori. Piani formativi finalizzati alle certificazioni.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-35">
+                        <div class="d-flex align-items-start">
+                            <span class="d-inline-flex align-items-center justify-content-center flex-shrink-0 rounded-circle text-white me-20" style="width:54px; height:54px; background: var(--it-theme-1);">
+                                <i class="fa-solid fa-user-tie" style="font-size:22px;"></i>
+                            </span>
+                            <div>
+                                <h5 class="mb-10" style="cursor:default;">Adults Language School</h5>
+                                <p class="mb-0">I corsi per adulti sono creati per le specifiche esigenze degli studenti dai 18 anni in su. Piani formativi finalizzati alle certificazioni.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-35">
+                        <div class="d-flex align-items-start">
+                            <span class="d-inline-flex align-items-center justify-content-center flex-shrink-0 rounded-circle text-white me-20" style="width:54px; height:54px; background: var(--it-theme-1);">
+                                <i class="fa-solid fa-chalkboard-user" style="font-size:22px;"></i>
+                            </span>
+                            <div>
+                                <h5 class="mb-10" style="cursor:default;">Teacher Language School</h5>
+                                <p class="mb-0">Corsi destinati al personale della scuola con programmi formativi mirati al mondo dell'insegnamento delle lingue nella scuola dell'infanzia e primaria. Piani formativi finalizzati alle certificazioni.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-35">
+                        <div class="d-flex align-items-start">
+                            <span class="d-inline-flex align-items-center justify-content-center flex-shrink-0 rounded-circle text-white me-20" style="width:54px; height:54px; background: var(--it-theme-1);">
+                                <i class="fa-solid fa-briefcase" style="font-size:22px;"></i>
+                            </span>
+                            <div>
+                                <h5 class="mb-10" style="cursor:default;">Business Language School</h5>
+                                <p class="mb-0">Corsi finalizzati alle specifiche esigenze richieste nel mondo del lavoro. Piani formativi finalizzati alle certificazioni.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -85,16 +172,10 @@
                             <h5 class="it-course-title mb-20">
                                 <a class="border-line" th:href="@{'/' + ${sub.url}}" th:text="${sub.titolo}">Sottosezione</a>
                             </h5>
-                            <div class="mb-0" th:if="${sub.riassunto != null and !sub.riassunto.isEmpty()}" th:utext="${sub.riassunto}">Descrizione</div>
+                            <div class="mb-0"
+                                 th:if="${sub.riassunto != null and !sub.riassunto.isEmpty()}" th:utext="${sub.riassunto}"
+                                 style="overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;">Descrizione</div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" th:if="${!section.hasSubsections() and (section.testo == null or section.testo.isEmpty())}">
-                <div class="col-lg-10 col-xl-9 mx-auto">
-                    <div class="alert alert-light text-center">
-                        Nessuna sottosezione disponibile al momento.
                     </div>
                 </div>
             </div>

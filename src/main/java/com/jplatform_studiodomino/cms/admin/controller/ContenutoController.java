@@ -264,6 +264,16 @@ public class ContenutoController {
                 db.setS1(documento.getS1());
                 db.setS2(documento.getS2());
                 db.setS3(documento.getS3());
+                // s4-s10 mancavano qui: prezzo (s5) e ore (s6) venivano scartati
+                // silenziosamente al salvataggio, l'entita' restava con i valori
+                // vecchi anche se il form admin li mostrava aggiornati.
+                db.setS4(documento.getS4());
+                db.setS5(documento.getS5());
+                db.setS6(documento.getS6());
+                db.setS7(documento.getS7());
+                db.setS8(documento.getS8());
+                db.setS9(documento.getS9());
+                db.setS10(documento.getS10());
 
                 db.setClick(documento.getClick());
 

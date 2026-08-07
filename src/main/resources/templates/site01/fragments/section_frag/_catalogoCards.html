@@ -6,8 +6,10 @@
   riusata da tutte le sectionCatalogoXxxSidebar.
 -->
 <div th:fragment="cards">
-    <div class="row gx-35" th:if="${section.hasContenuti()}">
-        <div class="col-xl-4 col-lg-6 col-md-6 mb-35" th:each="articolo : ${section.contenuti}">
+    <div class="row gx-35" id="grid-catalogo-corsi" th:if="${section.hasContenuti()}">
+        <div class="col-xl-4 col-lg-6 col-md-6 mb-35 isotope-item"
+             th:classappend="${articolo.s4 != null and !articolo.s4.isEmpty()} ? ${articolo.s4} : ''"
+             th:each="articolo : ${section.contenuti}">
             <div class="it-course-item">
                 <div class="it-course-thumb z-index-1 border-radius-20">
                     <a th:href="@{'/' + ${articolo.url}}">
@@ -16,7 +18,8 @@
                     <span class="course-category" th:if="${articolo.dataVisualizzata != null}" th:text="${articolo.dataVisualizzata}">Data avvio</span>
                 </div>
                 <div class="it-course-content p-relative">
-                    <h5 class="it-course-title mb-20">
+                    <!-- clamp 2 righe: altezza card uniforme con Isotope attivo -->
+                    <h5 class="it-course-title mb-20" style="overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
                         <a class="border-line" th:href="@{'/' + ${articolo.url}}" th:text="${articolo.titolo}">Titolo corso</a>
                     </h5>
                     <div class="it-course-meta mb-10 d-flex justify-content-between flex-wrap gap-2">
@@ -31,9 +34,6 @@
         </div>
     </div>
 
-    <div class="alert alert-light text-center" th:unless="${section.hasContenuti()}">
-        Nessun corso disponibile al momento in questa categoria.
-    </div>
 </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.jplatform_studiodomino.cms.front.controller;
 
+import com.jplatform_studiodomino.cms.admin.service.EmailSenderService;
 import com.jplatform_studiodomino.crm.entity.RegistroLead;
 import com.jplatform_studiodomino.crm.service.RegistroLeadService;
 import com.jplatform_studiodomino.shared.config.Configurazione;
@@ -18,11 +19,9 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Riceve l'invio del form "Richiedi Informazioni" (fragment
- * site01/fragments/jspUser/contatti2), converte in una riga di
- * RegistroLead (direzione=entrata, store=diretto) e reindirizza
- * alla pagina di provenienza mostrando esito/errore.
- *
- * Conversione da GestioneUtenteWeb.do?service=formContattiInvioMessaggio (Struts).
+ * site01/fragments/jspUser/contatti2), salva una riga RegistroLead
+ * (direzione=entrata, store=diretto) e reindirizza alla pagina di
+ * provenienza mostrando esito/errore.
  */
 @Controller
 @RequiredArgsConstructor
@@ -31,9 +30,11 @@ public class ContattoController {
 
     private static final DateTimeFormatter DATA_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final String DEFAULT_RETURN = "/front/370/Contatti";
+    private static final String EMAIL_NOTIFICA_STAFF = "info@studiodominoweb.com";
 
     private final ConfigurazioneService configurazioneService;
     private final RegistroLeadService registroLeadService;
+    private final EmailSenderService emailSenderService;
 
     @PostMapping("/contatti/invia")
     public String invia(
@@ -57,6 +58,8 @@ public class ContattoController {
             // ===== VERIFICA CAPTCHA =====
             Object sessionSum = session.getAttribute("captchaSum");
             session.removeAttribute("captchaSum");
+            session.removeAttribute("captchaA");
+            session.removeAttribute("captchaB");
 
             boolean captchaOk = sessionSum != null
                     && captcha != null
@@ -93,6 +96,26 @@ public class ContattoController {
             lead.setNotalead(oggettoFinale + " : " + (messaggioInformativo != null ? messaggioInformativo.trim() : ""));
 
             registroLeadService.crea(lead, config);
+
+            // ===== NOTIFICA STAFF VIA EMAIL =====
+            // il lead resta salvato nel CRM anche se l'invio email fallisce (es. SMTP giù)
+            try {
+                String testoEmail = "<p>Nuova richiesta ricevuta dal sito web.</p>"
+                        + "<p><strong>Oggetto:</strong> " + oggettoFinale + "</p>"
+                        + "<p><strong>Nome:</strong> " + lead.getL1() + "<br>"
+                        + "<strong>Cognome:</strong> " + lead.getL2() + "<br>"
+                        + "<strong>Email:</strong> " + lead.getL3() + "<br>"
+                        + "<strong>Telefono:</strong> " + lead.getL4() + "</p>"
+                        + "<p><strong>Messaggio:</strong><br>"
+                        + (messaggioInformativo != null ? messaggioInformativo.trim() : "") + "</p>";
+
+                emailSenderService.inviaEmail(
+                        EMAIL_NOTIFICA_STAFF, null,
+                        "Nuova richiesta informazioni dal sito - " + oggettoFinale,
+                        testoEmail);
+            } catch (Exception emailEx) {
+                log.warn("Lead salvato ma invio email di notifica fallito: {}", emailEx.getMessage());
+            }
 
             redirectAttributes.addFlashAttribute("contattoOk", true);
 

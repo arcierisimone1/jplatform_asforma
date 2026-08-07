@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<!--
-  Form "Richiedi Informazioni" - conversione da _contatti2.jsp (Struts/GestioneUtenteWeb.do)
-  Posta su /contatti/invia (ContattoController), che crea un RegistroLead (CRM) e
-  reindirizza alla pagina di provenienza con esito in ${contattoOk} / ${contattoErrore}.
-  Markup allineato al tema Educeet (classi it-signup-input-wrap / it-signup-input,
-  come in ContactFormOne.tsx del template originale).
 
-  Parametri fragment:
-    oggettoRichiesta   -> testo libero salvato come oggetto della richiesta (es. 'Informazioni generali')
-    idOggettoRichiesta -> id della pagina/corso a cui si riferisce la richiesta (0 = generico)
--->
 <div th:fragment="contatti2(oggettoRichiesta, idOggettoRichiesta)">
+
+    <style>
+        .it-signup-input { position: relative; }
+        .it-signup-input .clean-input {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            border: none;
+            background: none;
+            line-height: 1;
+        }
+        .it-signup-input .clean-input svg.icon {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
 
     <form id="informazioniGeneriche" th:action="@{/contatti/invia}" method="post">
 

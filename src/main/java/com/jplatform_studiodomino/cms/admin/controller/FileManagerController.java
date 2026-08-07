@@ -381,6 +381,37 @@ public class FileManagerController {
     }
 
     // =====================================================================
+    // UPLOAD IMMAGINE DA TINYMCE (drag&drop / incolla dentro l'editor)
+    // =====================================================================
+    @PostMapping("/upload-tinymce")
+    @ResponseBody
+    public Map<String, Object> uploadImageTinyMce(
+            @RequestParam("file") MultipartFile file,
+            HttpServletRequest request) {
+
+        Map<String, Object> result = new HashMap<>();
+        HttpSession session = request.getSession();
+        Configurazione config = configurazioneService.getConfig(session);
+
+        if (!config.isLogged()) {
+            result.put("error", "Non autorizzato");
+            return result;
+        }
+
+        try {
+            Images image = imagesService.uploadImage(file, "1", imagesRepositoryPath);
+            image.setL4(config.getAmministratore().getNomeCompleto());
+            image.setL5(LocalDateTime.now().format(DF));
+            imagesService.save(image);
+            result.put("location", config.getImagesRepositoryWeb() + image.getFullpath());
+        } catch (Exception e) {
+            log.error("Errore upload immagine da TinyMCE", e);
+            result.put("error", e.getMessage());
+        }
+        return result;
+    }
+
+    // =====================================================================
     // UPLOAD IMMAGINE AJAX (multipla)
     // =====================================================================
 

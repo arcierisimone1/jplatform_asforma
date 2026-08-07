@@ -16,11 +16,22 @@
 
                 <div class="col-lg-8">
 
+                    <style>
+                        /* Il CSS globale .it-course-meta e' pensato per le card (dove il
+                           primo elemento e' separato da un bordo/padding grande dagli
+                           altri): qui, nella pagina dettaglio, vogliamo che tutte le
+                           voci abbiano la stessa spaziatura fra loro. */
+                        .it-corso-detail-meta span:first-child {
+                            padding-right: 0 !important;
+                            border-right: none !important;
+                        }
+                    </style>
+
                     <div class="mb-30" th:if="${post.logo != null and !post.logo.isEmpty()}">
                         <img th:src="${config.imagesRepositoryWeb + post.logo}" th:alt="${post.titolo}" class="w-100 border-radius-20"/>
                     </div>
 
-                    <div class="it-course-meta d-flex flex-wrap gap-3 mb-30">
+                    <div class="it-course-meta it-corso-detail-meta d-flex flex-wrap gap-3 mb-30">
                         <span th:if="${post.dataVisualizzata != null and !post.dataVisualizzata.isEmpty()}">
                             <i class="fa-light fa-calendar" style="color: var(--it-theme-1); margin-right:5px;"></i>
                             <span th:text="${post.dataVisualizzata}">Data avvio</span>
@@ -43,6 +54,128 @@
 
                     <div th:if="${post.testo != null and !post.testo.isEmpty()}" th:utext="${post.testo}" class="mb-30"></div>
 
+                    <style>
+                        .it-corso-info-title {
+                            display: flex;
+                            align-items: center;
+                            gap: 15px;
+                            margin-bottom: 15px;
+                        }
+                        .it-corso-info-title .it-corso-info-icon {
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex-shrink: 0;
+                            width: 46px;
+                            height: 46px;
+                            border-radius: 50%;
+                            background: var(--it-theme-1);
+                            color: #fff;
+                            font-size: 19px;
+                        }
+                        .it-corso-info-title h4 {
+                            margin: 0;
+                            font-size: 19px;
+                        }
+                    </style>
+
+                    <!-- ============================================
+                         CORSO COLLEGATO (campo "l3" -> post.relazione)
+                         Come sul vecchio sito: se questo documento e' una data di
+                         calendario collegata a un corso "catalogo", la descrizione
+                         vera arriva da li' (relazione), non dai campi propri.
+                         ============================================ -->
+                    <div th:if="${post.relazione != null and post.relazione.testo != null and !post.relazione.testo.isEmpty()}" th:utext="${post.relazione.testo}" class="mb-30"></div>
+
+                    <div class="row g-4 mb-10">
+                        <th:block th:if="${post.relazione != null}">
+                            <div class="col-md-6" th:if="${post.relazione.l4 != null and !post.relazione.l4.isEmpty() and !#strings.equals(post.relazione.l4,'0')}">
+                                <div class="it-corso-info-title">
+                                    <span class="it-corso-info-icon"><i class="fa-solid fa-list-check"></i></span>
+                                    <h4>Caratteristiche del corso</h4>
+                                </div>
+                                <div th:utext="${post.relazione.l4}"></div>
+                            </div>
+                            <div class="col-md-6" th:if="${post.relazione.l5 != null and !post.relazione.l5.isEmpty() and !#strings.equals(post.relazione.l5,'0')}">
+                                <div class="it-corso-info-title">
+                                    <span class="it-corso-info-icon"><i class="fa-solid fa-book-open"></i></span>
+                                    <h4>Materiale didattico</h4>
+                                </div>
+                                <div th:utext="${post.relazione.l5}"></div>
+                            </div>
+                            <div class="col-md-6" th:if="${post.relazione.l7 != null and !post.relazione.l7.isEmpty() and !#strings.equals(post.relazione.l7,'0')}">
+                                <div class="it-corso-info-title">
+                                    <span class="it-corso-info-icon"><i class="fa-solid fa-certificate"></i></span>
+                                    <h4>Attestazioni in uscita</h4>
+                                </div>
+                                <div th:utext="${post.relazione.l7}"></div>
+                            </div>
+                            <div class="col-md-6" th:if="${post.relazione.l8 != null and !post.relazione.l8.isEmpty() and !#strings.equals(post.relazione.l8,'0')}">
+                                <div class="it-corso-info-title">
+                                    <span class="it-corso-info-icon"><i class="fa-solid fa-users"></i></span>
+                                    <h4>Destinatari</h4>
+                                </div>
+                                <div th:utext="${post.relazione.l8}"></div>
+                            </div>
+                        </th:block>
+
+                        <!-- Campi "l4/l5/l7/l8" propri del documento: se NON c'e' una
+                             relazione hanno lo stesso ruolo di sopra (es. pagina catalogo
+                             diretta, senza calendario). Se invece la relazione esiste,
+                             questi sono informazioni specifiche di questa data/edizione
+                             (es. "Calendario lezioni", "Iscrizioni e pagamenti" sul
+                             vecchio sito) e vengono mostrate comunque, in aggiunta. -->
+                        <div class="col-md-6" th:if="${post.l4 != null and !post.l4.isEmpty() and !#strings.equals(post.l4,'0')}">
+                            <div class="it-corso-info-title">
+                                <span class="it-corso-info-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                                <h4 th:text="${post.relazione != null ? 'Calendario lezioni' : 'Caratteristiche del corso'}">Calendario lezioni</h4>
+                            </div>
+                            <div th:utext="${post.l4}"></div>
+                        </div>
+
+                        <div class="col-md-6" th:if="${post.l5 != null and !post.l5.isEmpty() and !#strings.equals(post.l5,'0')}">
+                            <div class="it-corso-info-title">
+                                <span class="it-corso-info-icon"><i class="fa-solid fa-credit-card"></i></span>
+                                <h4 th:text="${post.relazione != null ? 'Iscrizioni e pagamenti' : 'Materiale didattico'}">Materiale didattico</h4>
+                            </div>
+                            <div th:utext="${post.l5}"></div>
+                        </div>
+
+                        <div class="col-md-6" th:if="${post.l7 != null and !post.l7.isEmpty() and !#strings.equals(post.l7,'0')}">
+                            <div class="it-corso-info-title">
+                                <span class="it-corso-info-icon"><i class="fa-solid fa-certificate"></i></span>
+                                <h4>Attestazioni in uscita</h4>
+                            </div>
+                            <div th:utext="${post.l7}"></div>
+                        </div>
+
+                        <div class="col-md-6" th:if="${post.l8 != null and !post.l8.isEmpty() and !#strings.equals(post.l8,'0')}">
+                            <div class="it-corso-info-title">
+                                <span class="it-corso-info-icon"><i class="fa-solid fa-users"></i></span>
+                                <h4>Destinatari</h4>
+                            </div>
+                            <div th:utext="${post.l8}"></div>
+                        </div>
+
+                        <!-- Campi "text2/text3": non esistevano nel vecchio sito con questo uso,
+                             aggiunti nel form admin ricostruito come spazio libero extra. -->
+                        <div class="col-md-6" th:if="${post.text2 != null and !post.text2.isEmpty()}">
+                            <div class="it-corso-info-title">
+                                <span class="it-corso-info-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                                <h4>Programma del corso</h4>
+                            </div>
+                            <div th:utext="${post.text2}"></div>
+                        </div>
+
+                        <div class="col-md-6" th:if="${post.text3 != null and !post.text3.isEmpty()}">
+                            <div class="it-corso-info-title">
+                                <span class="it-corso-info-icon"><i class="fa-solid fa-clipboard-list"></i></span>
+                                <h4>Destinatari e requisiti di accesso</h4>
+                            </div>
+                            <div th:utext="${post.text3}"></div>
+                        </div>
+                    </div>
+
                     <div class="sidebar-widget" th:if="${post.allegati != null and !post.allegati.isEmpty()}">
                         <h5 class="sidebar-widget-title mb-20">Documenti e programma</h5>
                         <ul class="list-unstyled mb-0">
@@ -60,7 +193,8 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="position-sticky border-radius-20 overflow-hidden" style="top:100px;">
+
+                    <div class="position-sticky border-radius-20" style="top:100px; padding:40px 35px; background:#fff; box-shadow:0 20px 30px 0 rgba(1,6,20,0.08);">
                         <div th:replace="~{site01/fragments/jspUser/contatti2 :: contatti2(oggettoRichiesta=${post.titolo}, idOggettoRichiesta=${post.id})}"></div>
                     </div>
                 </div>

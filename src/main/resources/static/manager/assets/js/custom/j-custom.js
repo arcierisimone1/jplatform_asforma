@@ -377,6 +377,9 @@ function initTinyMCE(selector) {
         menubar: false,
         statusbar: false,
         content_style: 'body { font-family: Inter, sans-serif; font-size: 14px; }',
+        content_css: ['/site01/assets/css/font-awesome-pro.css'],
+        extended_valid_elements: 'i[class|style],span[class|style]',
+        non_empty_elements: 'i,span',
         plugins: 'advlist autolink lists link image charmap preview anchor ' +
                  'searchreplace code fullscreen table wordcount',
         toolbar: 'undo redo | formatselect | bold italic underline | ' +
