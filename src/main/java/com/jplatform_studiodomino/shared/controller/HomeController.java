@@ -4,6 +4,7 @@ import com.jplatform_studiodomino.shared.config.Configurazione;
 import com.jplatform_studiodomino.shared.entity.Utente;
 import com.jplatform_studiodomino.shared.enums.ModuloApplicativo;
 import com.jplatform_studiodomino.shared.service.ConfigurazioneService;
+import com.jplatform_studiodomino.shared.service.DashboardService;
 import com.jplatform_studiodomino.shared.util.ViewUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class HomeController {
 
     private final ConfigurazioneService configurazioneService;
+    private final DashboardService dashboardService;
 
     /**
      * Dashboard generico con parametro L2
@@ -53,6 +55,8 @@ public class HomeController {
         model.addAttribute("config", config);
         model.addAttribute("l2", l2);
         model.addAttribute("moduloDescrizione", moduloDescrizione);
+        model.addAttribute("stats", dashboardService.getStatistiche(
+                config.getSito() != null ? config.getSito().getId() : null));
 
         // Template generico basato su L2
         return ViewUtils.resolveProtectedTemplate("front/dashboard");

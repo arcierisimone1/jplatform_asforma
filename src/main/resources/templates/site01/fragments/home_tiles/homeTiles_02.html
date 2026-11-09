@@ -5,8 +5,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="it-course-section-title-box text-center mb-65">
-                        <span class="it-section-subtitle">corsi</span>
-                        <h4 class="it-section-title">I corsi in <span class="z-index-1">Partenza</span></h4>
+                        <span class="it-section-subtitle">News</span>
+                        <h4 class="it-section-title">Notizie e <span class="z-index-1">Avvisi</span></h4>
                     </div>
                 </div>
             </div>
@@ -26,17 +26,12 @@
                             <a th:href="@{'/' + ${articolo.url}}" th:if="${articolo.logo != null and !articolo.logo.isEmpty()}">
                                 <img class="w-100" th:src="${config.imagesRepositoryWeb + articolo.logo}" th:alt="${articolo.titolo}"/>
                             </a>
-                            <span class="course-category" th:text="${articolo.dataVisualizzata}">Data avvio</span>
+                            <span class="course-category" th:text="${articolo.dataVisualizzata}">Data</span>
                         </div>
                         <div class="it-course-content p-relative">
                             <h5 class="it-course-title mb-20">
                                 <a class="border-line" th:href="@{'/' + ${articolo.url}}" th:text="${articolo.titolo}">Titolo corso</a>
                             </h5>
-                            <div class="it-course-meta mb-30 d-flex justify-content-between flex-wrap gap-2">
-                                <span><i class="fa-light fa-euro-sign"></i> <span th:text="${articolo.s5}">Prezzo</span></span>
-                                <span><i class="fa-light fa-clock"></i> <span th:text="${articolo.s6} + ' ore'">Ore</span></span>
-                                <span><i class="fa-light fa-map-marker-alt"></i> <span th:text="${articolo.text1}">Sede</span></span>
-                            </div>
                         </div>
                     </div>
                 </div>

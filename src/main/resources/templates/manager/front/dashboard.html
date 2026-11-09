@@ -21,7 +21,7 @@
                             <div class="p-4">
                                 <h2 class="text-white">Benvenuto, <span th:text="${config.amministratore?.nomeCompleto}">Admin</span>!</h2>
                                 <p class="text-white">Pannello di amministrazione JPlatform
-                                Studiodomino</p>
+                                    Studiodomino</p>
                                 <p class="text-white-50">
                                     Ultimo accesso: <span th:text="${config.amministratore?.dataultimoaccesso}">-</span>
                                 </p>
@@ -39,121 +39,13 @@
             </div>
         </div>
 
-        <!-- Stats Cards -->
-        <div class="col-md-6 col-xxl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-s bg-light-primary">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M13 9H7" stroke="#4680FF" stroke-width="1.5"/>
-                                    <path d="M22 10.97V13.03C22 13.58 21.56 14.03 21 14.05H19.04C17.96 14.05 16.97 13.26 16.88 12.18C16.82 11.55 17.06 10.96 17.48 10.55C17.85 10.17 18.36 9.95 18.92 9.95H21C21.56 9.97 22 10.42 22 10.97Z" stroke="#4680FF" stroke-width="1.5"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6 class="mb-0">Utenti Totali</h6>
-                        </div>
-                    </div>
-                    <div class="bg-body p-3 mt-3 rounded">
-                        <div class="mt-3 row align-items-center">
-                            <div class="col-7">
-                                <div id="all-earnings-graph"></div>
-                            </div>
-                            <div class="col-5">
-                                <h5 class="mb-1">1,234</h5>
-                                <p class="text-primary mb-0"><i class="ti ti-arrow-up-right"></i> 30.6%</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xxl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-s bg-light-warning">
-                                <i class="ti ti-file-text f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6 class="mb-0">Contenuti</h6>
-                        </div>
-                    </div>
-                    <div class="bg-body p-3 mt-3 rounded">
-                        <div class="mt-3 row align-items-center">
-                            <div class="col-7">
-                                <div id="page-views-graph"></div>
-                            </div>
-                            <div class="col-5">
-                                <h5 class="mb-1">567</h5>
-                                <p class="text-warning mb-0"><i class="ti ti-arrow-up-right"></i> 12%</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xxl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-s bg-light-success">
-                                <i class="ti ti-check f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6 class="mb-0">Tasks Completate</h6>
-                        </div>
-                    </div>
-                    <div class="bg-body p-3 mt-3 rounded">
-                        <div class="mt-3 row align-items-center">
-                            <div class="col-7">
-                                <div id="total-task-graph"></div>
-                            </div>
-                            <div class="col-5">
-                                <h5 class="mb-1">839</h5>
-                                <p class="text-success mb-0"><i class="ti ti-arrow-up-right"></i> Nuove</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xxl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <div class="avtar avtar-s bg-light-danger">
-                                <i class="ti ti-download f-20"></i>
-                            </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6 class="mb-0">Download</h6>
-                        </div>
-                    </div>
-                    <div class="bg-body p-3 mt-3 rounded">
-                        <div class="mt-3 row align-items-center">
-                            <div class="col-7">
-                                <div id="download-graph"></div>
-                            </div>
-                            <div class="col-5">
-                                <h5 class="mb-1">2,067</h5>
-                                <p class="text-danger mb-0"><i class="ti ti-arrow-down-right"></i> 5.3%</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- ===== Stats Cards =====
+             Ogni riga crea una card usando il modello "statCard" che sta in fondo al file.
+             Parametri: titolo, icona, colore Bootstrap, dati (dal controller), colore del grafico -->
+        <th:block th:replace="~{manager/front/dashboard :: statCard('Utenti registrati', 'ti ti-users',     'primary', ${stats['utenti']},    '#4680FF')}"></th:block>
+        <th:block th:replace="~{manager/front/dashboard :: statCard('Contenuti',        'ti ti-file-text', 'warning', ${stats['contenuti']}, '#E58A00')}"></th:block>
+        <th:block th:replace="~{manager/front/dashboard :: statCard('Sezioni',          'ti ti-folders',   'success', ${stats['sezioni']},   '#2CA87F')}"></th:block>
+        <th:block th:replace="~{manager/front/dashboard :: statCard('Allegati',         'ti ti-paperclip', 'danger',  ${stats['allegati']},  '#DC2626')}"></th:block>
 
         <!-- Quick Actions -->
         <div class="col-12">
@@ -187,6 +79,50 @@
 
 </div>
 
+
+<!-- =====================================================================
+     MODELLO DELLA CARD STATISTICA
+     Sta fuori da layout:fragment="content", quindi da solo non viene mostrato:
+     lo usano le 4 righe th:replace qui sopra.
+       stat.totale      → numero grande
+       stat.ultimi30gg  → "+N in 30 gg"
+       stat.serie       → "3,0,5,..." (12 mesi) per il grafico a barre
+     ===================================================================== -->
+<div class="col-md-6 col-xxl-3" th:fragment="statCard(titolo, icona, colore, stat, coloreHex)">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                    <div th:class="'avtar avtar-s bg-light-' + ${colore}">
+                        <i th:class="${icona} + ' f-20'"></i>
+                    </div>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-0" th:text="${titolo}">Titolo</h6>
+                </div>
+            </div>
+            <div class="bg-body p-3 mt-3 rounded">
+                <div class="mt-3 row align-items-center">
+                    <div class="col-7">
+                        <!-- il grafico lo disegna lo script in fondo leggendo data-serie -->
+                        <div class="dashboard-spark"
+                             th:attr="data-serie=${stat != null ? stat.serie : ''}, data-colore=${coloreHex}"></div>
+                    </div>
+                    <div class="col-5">
+                        <h5 class="mb-1"
+                            th:text="${stat != null ? #numbers.formatInteger(stat.totale, 1, 'POINT') : '-'}">0</h5>
+                        <p th:class="${stat != null and stat.ultimi30gg > 0} ? 'mb-0 small text-' + ${colore} : 'mb-0 small text-muted'">
+                            <i class="ti ti-arrow-up-right" th:if="${stat != null and stat.ultimi30gg > 0}"></i>
+                            <span th:text="${stat != null and stat.ultimi30gg > 0} ? '+' + ${stat.ultimi30gg} + ' in 30 gg' : 'nessuno in 30 gg'"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Extra CSS -->
 <th:block layout:fragment="extra-css">
     <!-- ApexCharts CSS se necessario -->
@@ -196,10 +132,39 @@
 <th:block layout:fragment="extra-js">
     <!-- ApexCharts -->
     <script th:src="@{/manager/assets/js/plugins/apexcharts.min.js}"></script>
-    <script th:src="@{/manager/assets/js/widgets/all-earnings-graph.js}"></script>
-    <script th:src="@{/manager/assets/js/widgets/page-views-graph.js}"></script>
-    <script th:src="@{/manager/assets/js/widgets/total-task-graph.js}"></script>
-    <script th:src="@{/manager/assets/js/widgets/download-graph.js}"></script>
+
+    <!-- Mini grafici a barre delle card: dati presi da data-serie (12 mesi, dal più vecchio) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // etichette dei 12 mesi per il tooltip (es. "dic 25", "gen 26", ...)
+            var mesi = [];
+            var d = new Date();
+            d.setDate(1);
+            d.setMonth(d.getMonth() - 11);
+            for (var i = 0; i < 12; i++) {
+                mesi.push(d.toLocaleDateString('it-IT', { month: 'short', year: '2-digit' }));
+                d.setMonth(d.getMonth() + 1);
+            }
+
+            document.querySelectorAll('.dashboard-spark').forEach(function (el) {
+                var serie = (el.dataset.serie || '').split(',').filter(String).map(Number);
+                if (!serie.length) return;
+
+                new ApexCharts(el, {
+                    chart: { type: 'bar', height: 50, sparkline: { enabled: true } },
+                    colors: [el.dataset.colore || '#4680FF'],
+                    plotOptions: { bar: { borderRadius: 2, columnWidth: '80%' } },
+                    series: [{ name: '', data: serie }],
+                    xaxis: { categories: mesi },
+                    tooltip: {
+                        x: { show: true },
+                        y: { title: { formatter: function () { return ''; } } },
+                        marker: { show: false }
+                    }
+                }).render();
+            });
+        });
+    </script>
 </th:block>
 
 </body>

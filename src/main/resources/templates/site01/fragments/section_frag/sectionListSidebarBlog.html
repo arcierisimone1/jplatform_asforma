@@ -3,7 +3,7 @@
 <body>
 <!-- sectionType.page3 = 'sectionListSidebarBlog' -->
 <th:block th:fragment="content">
-    <section class="pt-0">
+    <section class="pt-50">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 pe-5 lg-pe-3 md-pe-15px md-mb-50">
@@ -18,7 +18,7 @@
                         .it-blog-item-equal .it-blog-btn { margin-top: auto; }
                     </style>
                     <div class="row gx-35" th:if="${section.hasContenuti()}">
-                        <div class="col-lg-6 col-md-6 d-flex" th:each="articolo : ${section.contenuti}">
+                        <div class="col-lg-6 col-md-6 d-flex mb-3" th:each="articolo : ${section.contenuti}">
                             <div class="it-blog-item it-blog-item-equal mb-35">
                                 <div class="it-blog-thumb border-radius-20 mb-30 p-relative">
                                     <a th:href="@{'/' + ${articolo.url}}">
@@ -35,7 +35,7 @@
                                     <div class="mb-20" th:if="${articolo.riassunto != null}" th:utext="${articolo.riassunto}"
                                        style="overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;">Riassunto</div>
                                     <div class="it-blog-btn">
-                                        <a th:href="@{'/' + ${articolo.url}}" class="it-btn-yellow">
+                                        <a th:href="@{'/' + ${articolo.url}}" class="it-btn-yellow p-1">
                                             <span><span class="text-1">Leggi la notizia</span><span class="text-2">Leggi la notizia</span></span>
                                         </a>
                                     </div>

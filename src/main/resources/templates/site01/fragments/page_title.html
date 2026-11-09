@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<!-- ========================================
-     Banner di pagina (breadcrumb), ricostruito sul markup
-     reale del tema Educeet (it-breadcrumb-area / it-breadcrumb-title /
-     it-breadcrumb-list), come in Breadcrumb.tsx / BreadcrumbTwo.tsx
-     del template originale. Le classi precedenti (page-title-big-typography,
-     breadcrumb-style-01) non esistono nel CSS di Educeet: il banner
-     risultava invisibile/non stilizzato.
-     ======================================== -->
+
 <th:block th:fragment="sectionTitle">
     <div class="it-breadcrumb-area fix z-index-1"
          th:style="${section != null and section.info5 != null and !section.info5.isEmpty() and section.info5 != '0'} ? 'background-image: url(' + ${config.imagesRepositoryWeb} + ${section.info5} + ');' : 'background-image: url(/site01/assets/img/shape/breadcrumb-1-bg.png);'">
@@ -24,11 +17,12 @@
                                 <span th:if="${breadcrumb.items == null or breadcrumb.items.isEmpty() or !#strings.equalsIgnoreCase(breadcrumb.items[0].titolo, 'Home')}">
                                     <a th:href="@{/front}">Home</a>
                                 </span>
+                                <span class="dvdr" th:if="${breadcrumb.items != null and !breadcrumb.items.isEmpty() and !#strings.equalsIgnoreCase(breadcrumb.items[0].titolo, 'Home')}"><span class="dvdr-arrow">&rsaquo;</span></span>
                                 <th:block th:each="item, iterStat : ${breadcrumb.items}">
-                                    <span class="dvdr" th:unless="${iterStat.first}"><i class="fas fa-chevron-right fs-12"></i></span>
+                                    <span class="dvdr" th:unless="${iterStat.first}"><span class="dvdr-arrow">&rsaquo;</span></span>
                                     <span><a th:href="${item.url != null and item.url.startsWith('/')} ? ${item.url} : '/' + ${item.url}" th:text="${item.titolo}">Sezione</a></span>
                                 </th:block>
-                                <span class="dvdr"><i class="fas fa-chevron-right fs-12"></i></span>
+                                <span class="dvdr"><span class="dvdr-arrow">&rsaquo;</span></span>
                                 <i th:text="${breadcrumb.itemAttuale}">Pagina</i>
                             </div>
                         </div>
@@ -53,11 +47,12 @@
                                 <span th:if="${breadcrumb.items == null or breadcrumb.items.isEmpty() or !#strings.equalsIgnoreCase(breadcrumb.items[0].titolo, 'Home')}">
                                     <a th:href="@{/front}">Home</a>
                                 </span>
+                                <span class="dvdr" th:if="${breadcrumb.items != null and !breadcrumb.items.isEmpty() and !#strings.equalsIgnoreCase(breadcrumb.items[0].titolo, 'Home')}"><span class="dvdr-arrow">&rsaquo;</span></span>
                                 <th:block th:each="item, iterStat : ${breadcrumb.items}">
-                                    <span class="dvdr" th:unless="${iterStat.first}"><i class="fas fa-chevron-right fs-12"></i></span>
+                                    <span class="dvdr" th:unless="${iterStat.first}"><span class="dvdr-arrow">&rsaquo;</span></span>
                                     <span><a th:href="${item.url != null and item.url.startsWith('/')} ? ${item.url} : '/' + ${item.url}" th:text="${item.titolo}">Sezione</a></span>
                                 </th:block>
-                                <span class="dvdr"><i class="fas fa-chevron-right fs-12"></i></span>
+                                <span class="dvdr"><span class="dvdr-arrow">&rsaquo;</span></span>
                                 <i th:text="${breadcrumb.itemAttuale}">Pagina</i>
                             </div>
                         </div>

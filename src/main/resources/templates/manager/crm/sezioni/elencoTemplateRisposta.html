@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="it"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{manager/layout/template}">
+<body>
+<div layout:fragment="content">
+
+  <div class="row">
+    <div class="col-12">
+      <section class="card" style="border-radius: 15px; overflow: hidden; border: none;">
+        <header class="card-header" style="background-color: #2CA87F; border-bottom: none; padding: 15px 20px;">
+          <div class="card-actions">
+            <a href="#" class="card-action card-action-toggle" data-card-toggle style="color: #fff;"></a>
+          </div>
+          <h2 class="card-title" style="color: #fff; font-weight: bold;">Gestione Risposte Standard</h2>
+          <p class="card-subtitle" style="color: rgba(255, 255, 255, 0.9);">
+            Modelli di risposta riutilizzabili per le comunicazioni CRM.
+          </p>
+        </header>
+        <div class="card-body">
+
+          <div class="right-wrapper text-right mb-3">
+            <a href="javascript:void(0);"
+               class="btn btn-outline-danger rounded-pill px-3 me-2"
+               onclick="cancellaTemplateRispostaMultiplo()">
+              <i class="fas fa-trash-alt"></i> <span class="btn-text">Cancella selezionati</span>
+            </a>
+            <a th:href="@{/admin/crm/risposte/new}"
+               class="btn btn-success rounded-pill px-3 shadow-sm">
+              <i class="fas fa-plus"></i> <span class="btn-text">Nuova risposta</span>
+            </a>
+          </div>
+
+          <div class="table-responsive">
+            <table id="elencoTemplateRispostaTabella" class="table table-bordered table-striped mb-0">
+              <thead>
+              <tr>
+                <th style="width:5%;"><input type="checkbox" id="selAllTemplateRisposta"></th>
+                <th>#</th>
+                <th>Titolo</th>
+                <th class="d-none d-md-table-cell">Descrizione</th>
+                <th class="d-none d-md-table-cell">Selettore</th>
+                <th class="d-none d-md-table-cell">URL</th>
+                <th style="width:120px;" class="text-center">Azioni</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="riga-vuota" th:if="${#lists.isEmpty(elencoTemplateRisposte)}">
+                <td colspan="7" class="text-center text-muted py-3">Nessuna risposta standard presente.</td>
+              </tr>
+              <tr th:each="row : ${elencoTemplateRisposte}">
+                <td class="text-center">
+                  <input type="checkbox" name="row_sel" class="riga-sel" th:value="${row.id}">
+                </td>
+                <td th:text="${row.id}">0</td>
+                <td>
+                  <a th:href="@{/admin/crm/risposte/{id}(id=${row.id})}" th:text="${row.titolo}">Titolo</a>
+                </td>
+                <td class="d-none d-md-table-cell" th:text="${row.descrizione}">-</td>
+                <td class="d-none d-md-table-cell" th:text="${row.selettore}">-</td>
+                <td class="d-none d-md-table-cell" th:text="${row.url}">-</td>
+                <td class="text-center text-nowrap">
+                  <a th:href="@{/admin/crm/risposte/{id}(id=${row.id})}"
+                     title="Modifica" class="text-primary me-2">
+                    <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  <a th:href="@{/admin/crm/risposte/{id}/duplica(id=${row.id})}"
+                     title="Duplica" class="text-secondary me-2">
+                    <i class="far fa-copy"></i>
+                  </a>
+                  <a href="javascript:void(0);"
+                     th:onclick="'cancellaTemplateRisposta(' + ${row.id} + ')'"
+                     title="Cancella" class="text-danger">
+                    <i class="far fa-trash-alt"></i>
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script th:inline="javascript">
+    function cancellaTemplateRisposta(id) {
+    confirmAction('Sei sicuro di voler eliminare questa risposta standard?', function() {
+        fetch('/admin/crm/risposte/' + id + '/delete', { method: 'POST' })
+            .then(r => r.text())
+            .then(res => {
+                if (res === 'OK') location.reload();
+                else alert('Errore durante la cancellazione.');
+            });
+    });
+}
+
+function cancellaTemplateRispostaMultiplo() {
+    const ids = Array.from(document.querySelectorAll('.riga-sel:checked')).map(cb => cb.value);
+    if (ids.length === 0) {
+        alert('Seleziona almeno una risposta standard.');
+        return;
+    }
+    confirmAction('Eliminare le ' + ids.length + ' risposte selezionate?', function() {
+        Promise.all(ids.map(id =>
+            fetch('/admin/crm/risposte/' + id + '/delete', { method: 'POST' })
+        )).then(() => location.reload());
+    });
+}
+
+    document.getElementById('selAllTemplateRisposta').addEventListener('change', function() {
+        document.querySelectorAll('.riga-sel').forEach(cb => cb.checked = this.checked);
+    });
+  </script>
+
+</div>
+</body>
+</html>

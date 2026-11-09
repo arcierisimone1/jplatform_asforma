@@ -94,22 +94,21 @@
     (function() {
     const WARNING_MS = 9 * 60 * 1000;
     const EXPIRE_MS  = 10 * 60 * 1000;
-    let warningTimer, expireTimer, countdownInterval;
+    let warningTimer, expireTimer;
 
     function resetTimers() {
         clearTimeout(warningTimer);
         clearTimeout(expireTimer);
-        clearInterval(countdownInterval);
 
         warningTimer = setTimeout(function() {
             document.getElementById('sessionWarningModal').style.display = 'flex';
             let remaining = 60;
             const countdown = document.getElementById('sessionCountdown');
             countdown.textContent = remaining;
-            countdownInterval = setInterval(function() {
+            const interval = setInterval(function() {
                 remaining--;
                 countdown.textContent = remaining;
-                if (remaining <= 0) clearInterval(countdownInterval);
+                if (remaining <= 0) clearInterval(interval);
             }, 1000);
         }, WARNING_MS);
 
@@ -121,25 +120,10 @@
     resetTimers();
 
     window.keepSession = function() {
-        // annulla subito lo scadere della sessione, prima ancora che il ping
-        // risponda: altrimenti, cliccando "sì" negli ultimi secondi, il round-trip
-        // di rete potrebbe far scattare comunque l'expireTimer prima del clearTimeout
-        clearTimeout(warningTimer);
-        clearTimeout(expireTimer);
-        clearInterval(countdownInterval);
-        document.getElementById('sessionWarningModal').style.display = 'none';
-
-        fetch('/admin/ping', { credentials: 'same-origin' })
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('ping fallito: ' + response.status);
-                }
-                resetTimers();
-            })
-            .catch(function() {
-                window.location.href = '/logout';
-            });
-    };
+    document.getElementById('sessionWarningModal').style.display = 'none';
+    resetTimers();
+    fetch('/admin/ping').catch(function() {});
+};
 })();
 </script>
 

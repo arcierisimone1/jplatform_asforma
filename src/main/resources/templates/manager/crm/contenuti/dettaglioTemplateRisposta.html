@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="it"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{manager/layout/template}">
+<body>
+
+<div layout:fragment="content">
+
+  <form th:action="@{/admin/crm/risposte/save}"
+        th:object="${templateRisposta}"
+        method="post"
+        id="templaterisposta"
+        class="form-bordered">
+
+    <input type="hidden" th:field="*{id}"/>
+
+    <header class="page-header mb-4">
+      <div class="d-flex align-items-center w-100">
+        <div class="title-container">
+          <h2 style="border-left: 5px solid #0088cc; padding-left: 15px; margin: 0; white-space: nowrap;">
+            Dettaglio Risposta Standard
+          </h2>
+        </div>
+        <div class="right-wrapper text-right" style="margin-left: auto; margin-right: 10%; margin-bottom: 20px;">
+          <button type="button"
+                  onclick="inviaForm(event)"
+                  class="mb-1 mt-1 mr-1 btn btn-sm btn-primary">
+            <i class="fas fa-save"></i> <span class="btn-text">Salva</span>
+          </button>
+          <a th:href="@{/admin/crm/risposte}"
+             class="mb-1 mt-1 mr-1 btn btn-sm btn-danger">
+            <i class="fas fa-times-circle"></i> <span class="btn-text">Esci</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="row" style="margin-top: -25px">
+      <div class="col-lg-12">
+        <div class="card shadow-sm border-0" style="border-radius: 15px; background: #fff; padding: 20px;">
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Titolo</label>
+              <input type="text" class="form-control" th:field="*{titolo}" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Selettore</label>
+              <input type="text" class="form-control" th:field="*{selettore}">
+            </div>
+
+            <div class="col-md-8">
+              <label class="form-label">Descrizione</label>
+              <input type="text" class="form-control" th:field="*{descrizione}">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">URL</label>
+              <input type="text" class="form-control" th:field="*{url}">
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Contenuto</label>
+              <textarea class="form-control" rows="10" th:field="*{contenuto}"></textarea>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <a class="text-muted" data-bs-toggle="collapse" href="#altriDatiTemplate" role="button" style="text-decoration:none; font-size:0.85rem;">
+              Altri dati (l1 - l10, uso raro)
+            </a>
+            <div class="collapse mt-2" id="altriDatiTemplate">
+              <div class="row g-2">
+                <div class="col-md-2"><label class="form-label small">l1</label><input type="text" class="form-control form-control-sm" th:field="*{l1}"></div>
+                <div class="col-md-2"><label class="form-label small">l2</label><input type="text" class="form-control form-control-sm" th:field="*{l2}"></div>
+                <div class="col-md-2"><label class="form-label small">l3</label><input type="text" class="form-control form-control-sm" th:field="*{l3}"></div>
+                <div class="col-md-2"><label class="form-label small">l4</label><input type="text" class="form-control form-control-sm" th:field="*{l4}"></div>
+                <div class="col-md-2"><label class="form-label small">l5</label><input type="text" class="form-control form-control-sm" th:field="*{l5}"></div>
+                <div class="col-md-2"><label class="form-label small">l6</label><input type="text" class="form-control form-control-sm" th:field="*{l6}"></div>
+                <div class="col-md-2"><label class="form-label small">l7</label><input type="text" class="form-control form-control-sm" th:field="*{l7}"></div>
+                <div class="col-md-2"><label class="form-label small">l8</label><input type="text" class="form-control form-control-sm" th:field="*{l8}"></div>
+                <div class="col-md-2"><label class="form-label small">l9</label><input type="text" class="form-control form-control-sm" th:field="*{l9}"></div>
+                <div class="col-md-2"><label class="form-label small">l10</label><input type="text" class="form-control form-control-sm" th:field="*{l10}"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <script th:inline="javascript">
+    function inviaForm(e) {
+        if (e) e.preventDefault();
+        var form = document.getElementById('templaterisposta');
+
+        if (typeof tinymce !== 'undefined') {
+            try {
+                if (typeof tinymce.triggerSave === 'function') {
+                    tinymce.triggerSave();
+                } else if (tinymce.editors && tinymce.editors.length > 0) {
+                    tinymce.editors.forEach(function(editor) { editor.save(); });
+                }
+            } catch(err) { console.warn('TinyMCE save error:', err); }
+        }
+
+        if (!form.checkValidity()) {
+            form.classList.add('was-validated');
+            return false;
+        }
+
+        form.submit();
+        return true;
+    }
+  </script>
+
+  <script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof initTinyMCE === 'function') {
+            initTinyMCE('#contenuto');
+        }
+    });
+  </script>
+
+</div>
+</body>
+</html>

@@ -6,7 +6,6 @@
 <head>
     <th:block layout:fragment="head">
         <th:block th:replace="~{site01/fragments/head :: head}"></th:block>
-        <th:block th:replace="~{site01/fragments/head_social_home :: head_social}"></th:block>
     </th:block>
 </head>
 
@@ -21,7 +20,7 @@
     <h1 class="sr-only" th:text="${config != null and config.sito != null ? config.sito.type + (config.sito.descrizione != null and !config.sito.descrizione.isEmpty() ? ' - ' + config.sito.descrizione : '') : 'Home'}">Home</h1>
     <th:block th:replace="~{site01/fragments/home_tiles/homeTiles_00 :: homeTiles_00}"></th:block>
     <!--th:block th:replace="~{site01/fragments/home_tiles/homeTiles_01 :: homeTiles_01}"></th:block-->
-    <!--th:block th:replace="~{site01/fragments/home_tiles/homeTiles_02 :: homeTiles_02}"></th:block-->
+    <th:block th:replace="~{site01/fragments/home_tiles/homeTiles_02 :: homeTiles_02}"></th:block>
     <!--th:block th:replace="~{site01/fragments/home_tiles/homeTiles_03 :: homeTiles_03}"></th:block-->
     <!--th:block th:replace="~{site01/fragments/home_tiles/homeTiles_04 :: homeTiles_04}"></th:block-->
     <!--th:block th:replace="~{site01/fragments/home_tiles/homeTiles_05 :: homeTiles_05}"></th:block-->

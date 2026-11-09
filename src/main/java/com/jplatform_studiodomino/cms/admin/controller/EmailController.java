@@ -74,6 +74,11 @@ public class EmailController {
 
         String accountDaCaricare = pulisciAccountId(idAccount);
 
+        if (accountDaCaricare == null || "0".equals(accountDaCaricare)) {
+            accountDaCaricare = pulisciAccountId(idEmailRaw);
+            if ("0".equals(accountDaCaricare)) accountDaCaricare = null;
+        }
+
         try {
             List<Map<String, Object>> emails = Collections.emptyList();
             if (accountDaCaricare != null && !"0".equals(accountDaCaricare)) {
@@ -85,12 +90,19 @@ public class EmailController {
             model.addAttribute("listaEmailArrivo", emails);
             model.addAttribute("folderAttivo", folder);
             model.addAttribute("currentAccountId", accountDaCaricare);
-            model.addAttribute("erroreMailer", null);
+            model.addAttribute("erroreMailer", accountDaCaricare == null ? "configurazione_assente" : null);
         } catch (Exception e) {
             log.error("Errore caricamento inbox account={} folder={}", accountDaCaricare, folder, e);
+            Throwable causa = e;
+            boolean authFallita = false;
+            while (causa != null) {
+                if (causa instanceof jakarta.mail.AuthenticationFailedException) { authFallita = true; break; }
+                causa = causa.getCause();
+            }
             model.addAttribute("listaEmailArrivo", Collections.emptyList());
             model.addAttribute("folderAttivo", folder);
-            model.addAttribute("erroreMailer", "errore_generico");
+            model.addAttribute("currentAccountId", accountDaCaricare);
+            model.addAttribute("erroreMailer", authFallita ? "autenticazione_fallita" : "errore_generico");
         }
 
         model.addAttribute("config", config);

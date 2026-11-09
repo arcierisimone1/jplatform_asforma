@@ -4,8 +4,8 @@
 
         <div class="it-header-top-area black-bg it-header-top-ptb">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-xl-8 col-lg-8 col-md-7 col-sm-6">
+                <div class="row align-items-center justify-content-center flex-nowrap" style="column-gap:40px;">
+                    <div class="col-auto">
                         <style>
                             .it-header-top-contact-wrap {
                                 flex-wrap: nowrap;
@@ -37,7 +37,7 @@
                             }
                         </style>
                         <div class="it-header-top-contact-wrap d-flex justify-content-center justify-content-sm-start align-items-center">
-                            <span class="text-white d-none d-md-inline-block me-3" style="white-space:nowrap; flex-shrink:0;">Organismo di formazione accreditato Regione Basilicata</span>
+                            <span class="text-white d-none d-md-inline-block me-3" style="white-space:nowrap; flex-shrink:0;">Associazione Promozionale Sociale</span>
                             <ul>
                                 <li class="d-none d-lg-inline-block">
                                     <div class="it-header-top-contact d-flex align-items-center">
@@ -61,11 +61,21 @@
                                     </div>
                                 </li>
                             </ul>
+                            <div class="p-relative d-none d-xl-flex ms-auto" th:with="seo=${seo != null ? seo : @seoService.fallback()}" style="flex-shrink:0; position:relative; z-index:20;">
+                                <button type="button" aria-label="Condividi" style="background:none;border:none;padding:6px;cursor:pointer;line-height:0;color:#fff;font-size:16px;"
+                                        onclick="var f=this.nextElementSibling; f.classList.toggle('is-open');">
+                                    <i class="fa-light fa-share-alt"></i>
+                                </button>
+                                <div class="it-search-expand"
+                                     style="position:absolute; right:0; top:100%; margin-top:10px; background:#fff; box-shadow:0 15px 30px rgba(0,0,0,.12); border-radius:10px; padding:14px; z-index:1000;">
+                                    <th:block th:replace="~{site01/fragments/head_social_home :: shareBar(${seo.canonicalUrl}, ${seo.title})}"></th:block>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-5 col-sm-6 d-none d-sm-block">
-                        <div class="it-header-top-right-action d-flex align-items-center justify-content-end">
-                            <div class="it-header-top-social-box align-items-center d-flex">
+                    <div class="col-auto d-none d-sm-block">
+                        <div class="it-header-top-right-action d-flex align-items-center">
+                            <div class="it-header-top-social-box align-items-center d-flex" style="gap:8px;">
                                 <span>Seguici su:</span>
                                 <a href="https://www.facebook.com/ludumspace" aria-label="Facebook">
                                     <svg width="12" height="16" viewBox="0 0 12 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -390,24 +400,6 @@
                 </ul>
             </div>
 
-            <!-- Calendario corsi in partenza (dal vecchio side-panel.jsp, riscritto con classi Educeet) -->
-            <div class="itoffcanvas__blog" th:if="${config != null and config.contenutiFront05 != null}">
-                <h3 class="offcanva-title">Corsi in Partenza</h3>
-                <th:block th:each="articolo : ${config.contenutiFront05}">
-                    <div class="itoffcanvas__blog-item d-flex align-items-center mb-15">
-                        <div class="itoffcanvas__blog-thumb me-3">
-                            <a th:href="@{'/' + ${articolo.url}}">
-                                <img th:src="${config.imagesRepositoryWeb + articolo.logo}" th:alt="${articolo.titolo}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;"/>
-                            </a>
-                        </div>
-                        <div class="itoffcanvas__blog-content">
-                            <span class="d-block small text-muted" th:text="${articolo.dataVisualizzata}">Data</span>
-                            <a th:href="@{'/' + ${articolo.url}}" th:text="${articolo.titolo}">Titolo corso</a>
-                        </div>
-                    </div>
-                </th:block>
-            </div>
-
             <div class="itoffcanvas__info">
                 <h3 class="offcanva-title">Contattaci</h3>
                 <div class="it-info-wrapper mb-20 d-flex align-items-center">
@@ -425,10 +417,10 @@
                     </div>
                 </div>
                 <div class="it-info-wrapper mb-20 d-flex align-items-center">
-                    <div class="itoffcanvas__info-icon"><a href="https://maps.google.com/?q=Via+del+Gallitello,+74,+85100+Potenza+PZ" target="_blank"><i class="fas fa-map-marker-alt"></i></a></div>
+                    <div class="itoffcanvas__info-icon"><a href="https://maps.google.com/?q=Via+del+Gallitello,+72,+85100+Potenza+PZ" target="_blank"><i class="fas fa-map-marker-alt"></i></a></div>
                     <div class="itoffcanvas__info-address">
                         <span>Sede</span>
-                        <a href="https://maps.google.com/?q=Via+del+Gallitello,+74,+85100+Potenza+PZ" target="_blank">Via del Gallitello, 72 - Potenza (PZ)</a>
+                        <a href="https://maps.google.com/?q=Via+del+Gallitello,+72,+85100+Potenza+PZ" target="_blank">Via del Gallitello, 72 - Potenza (PZ)</a>
                     </div>
                 </div>
             </div>

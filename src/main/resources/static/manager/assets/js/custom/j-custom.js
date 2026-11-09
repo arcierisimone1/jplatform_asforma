@@ -35,6 +35,18 @@ $(document).ready(function(){
         });
     }
 
+
+        // Elenco anagrafica utenti (CRM)
+        if ($('#elencoAnagraficaTabella').length > 0
+            && $('#elencoAnagraficaTabella tbody tr').not('.riga-vuota').length > 0) {
+            initDataTable('#elencoAnagraficaTabella', {
+                order: [[1, 'asc']],
+                columnDefs: [
+                    { orderable: false, targets: [0, 3] }
+                ]
+            });
+        }
+
     // Tabelle nelle tab - inizializzate lazy al primo click
     document.querySelectorAll('button[data-bs-toggle="tab"]').forEach(function(tabBtn) {
         tabBtn.addEventListener('shown.bs.tab', function(e) {
@@ -299,7 +311,8 @@ function cancellaSezioniSelezionate() {
             $.ajax({
                 type: 'POST',
                 url: '/admin/sezioni/deleteMultiplo',
-                data: { delSectID: ids },
+                //data: { delSectID: ids },
+                data: { delSezioniID: ids },
                 traditional: true,
                 success: function() {
                     showToast('Completato', 'Sezioni eliminate.');
@@ -381,10 +394,10 @@ function initTinyMCE(selector) {
         extended_valid_elements: 'i[class|style],span[class|style]',
         non_empty_elements: 'i,span',
         plugins: 'advlist autolink lists link image charmap preview anchor ' +
-                 'searchreplace code fullscreen table wordcount',
-        toolbar: 'undo redo | formatselect | bold italic underline | ' +
-                 'forecolor backcolor | alignleft aligncenter alignright alignjustify | ' +
-                 'bullist numlist outdent indent | link image table | code fullscreen',
+                        'searchreplace code fullscreen table wordcount pastetext',
+               toolbar: 'undo redo | formatselect | bold italic underline | ' +
+                        'forecolor backcolor | alignleft aligncenter alignright alignjustify | ' +
+                        'bullist numlist outdent indent | link image table | pastetext removeformat | code fullscreen',
         automatic_uploads: true,
         images_upload_url: '/admin/filemanager/upload-tinymce',
         image_advtab: true,

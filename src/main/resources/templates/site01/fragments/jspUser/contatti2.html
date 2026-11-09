@@ -35,32 +35,32 @@
                 <div class="col-md-6">
                     <div class="it-signup-input mb-40">
                         <label>Nome</label>
-                        <input type="text" name="nome" required placeholder="Nome"/>
+                        <input type="text" name="nome" required placeholder="Nome" th:value="${contattoForm?.nome}"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="it-signup-input mb-40">
                         <label>Cognome</label>
-                        <input type="text" name="cognome" required placeholder="Cognome"/>
+                        <input type="text" name="cognome" required placeholder="Cognome" th:value="${contattoForm?.cognome}"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="it-signup-input mb-40">
                         <label>Email</label>
-                        <input type="email" name="email" required placeholder="Email"/>
+                        <input type="email" name="email" required placeholder="Email" autocapitalize="off" autocorrect="off" spellcheck="false" th:value="${contattoForm?.email}"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="it-signup-input mb-40">
                         <label>Telefono</label>
-                        <input type="tel" name="telefono" required placeholder="Telefono"/>
+                        <input type="tel" name="telefono" required placeholder="Telefono" th:value="${contattoForm?.telefono}"/>
                     </div>
                 </div>
             </div>
 
             <div class="it-signup-input mb-40">
                 <label>Messaggio</label>
-                <textarea name="messaggioInformativo" required placeholder="Messaggio" style="min-height:120px;"></textarea>
+                <textarea name="messaggioInformativo" required placeholder="Messaggio" style="min-height:120px;" th:text="${contattoForm?.messaggioInformativo}"></textarea>
             </div>
 
             <div class="it-signup-input mb-40">
@@ -69,7 +69,7 @@
             </div>
 
             <div class="mb-30 d-flex align-items-start" style="gap:10px;">
-                <input type="checkbox" name="terms_conditions" id="terms_conditions" value="1" required style="margin-top:5px;"/>
+                <input type="checkbox" name="terms_conditions" id="terms_conditions" value="1" required style="margin-top:5px;" th:checked="${contattoForm?.terms_conditions != null}"/>
                 <label class="form_privacy mb-0" for="terms_conditions">
                     Inviando il presente modulo autorizzo al trattamento dei miei dati personali così come
                     indicato nell'informativa
@@ -94,6 +94,16 @@
                 </i>
             </button>
         </div>
+        <script th:if="${captchaErrore}">
+            document.addEventListener('DOMContentLoaded', function () {
+                var c = document.querySelector('#informazioniGeneriche input[name="captcha"]');
+                if (!c) return;
+                c.setCustomValidity('Codice di controllo errato, riprova.');
+                c.focus();
+                c.reportValidity();
+                c.addEventListener('input', function () { c.setCustomValidity(''); });
+            });
+        </script>
     </form>
 
 </div>

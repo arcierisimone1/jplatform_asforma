@@ -13,7 +13,6 @@
     <script th:src="@{|/${config.sito.path2}/js/jportal/jportal.js|}"></script>
     <script th:src="@{|/${config.sito.path2}/js/jportal/jportalCalendar.js|}"></script>
 <script th:src="@{|/${config.sito.path2}/js/jquery.cookie.min.js|}"></script>
-    <script th:src="@{|/${config.sito.path2}/js/gdpr-cookie-master/js/jquery-eu-cookie-law-popup.js|}"></script>
 <script th:src="@{|/${config.sito.path2}/js/bootstrap-italia.js|}"></script>
 <script th:src="@{|/${config.sito.path2}/js/components/jquery-easing/jquery.easing.js|}"></script>
 <script th:src="@{|/${config.sito.path2}/js/components/jquery.scrollto/jquery.scrollTo.js|}"></script>
@@ -51,5 +50,5 @@
         }
     });
 </script>
-
+    <th:block th:utext="${(config.sito.html1 ?: '') + (config.sito.html2 ?: '') + (config.sito.html3 ?: '') + (config.sito.stat ?: '') + (config.sito.analytics ?: '')}"></th:block>
 </th:block>

@@ -2,6 +2,7 @@ package com.jplatform_studiodomino.cms.admin.controller;
 
 import com.jplatform_studiodomino.shared.config.Configurazione;
 import com.jplatform_studiodomino.shared.service.ConfigurazioneService;
+import com.jplatform_studiodomino.shared.service.DashboardService;
 import com.jplatform_studiodomino.shared.util.ViewUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AdminController {
 
     private final ConfigurazioneService configurazioneService;
+    private final DashboardService dashboardService;
 
     @GetMapping
     public String dashboard(HttpServletRequest request, Model model) {
@@ -38,6 +40,8 @@ public class AdminController {
 
         // ✅ PASSA ConfigurazioneCore al template
         model.addAttribute("config", configCore);
+        model.addAttribute("stats", dashboardService.getStatistiche(
+                configCore.getSito() != null ? configCore.getSito().getId() : null));
 
         return ViewUtils.resolveProtectedTemplate("front/dashboard");
     }

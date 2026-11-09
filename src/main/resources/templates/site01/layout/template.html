@@ -1,36 +1,78 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz">
-    <head>
-        <!-- Carica i metatag e i CSS comuni -->
-        <th:block th:replace="~{site01/fragments/head :: head}"></th:block>
-    </head>
+      xmlns:layout="http://www.ultraq.net.nz">
+<head>
+    <!-- Carica i metatag e i CSS comuni -->
+    <th:block th:replace="~{site01/fragments/head :: head}"></th:block>
+</head>
 
-    <body class="container-1340px eupopup eupopup-bottom">
+<body class="container-1340px">
 
-        <!-- Body wrapper -->
-        <div id="wrapper" class="clearfix">
-            <!-- Sezione Header (sostituibile se necessario) -->
-            <th:block layout:fragment="header">
-                <th:block th:replace="~{site01/fragments/header :: header}"></th:block>
-            </th:block>
+<!-- Body wrapper -->
+<div id="wrapper" class="clearfix">
+    <!-- Sezione Header (sostituibile se necessario) -->
+    <th:block layout:fragment="header">
+        <th:block th:replace="~{site01/fragments/header :: header}"></th:block>
+    </th:block>
 
-            <!-- Contenuto Principale: qui verrà iniettato il codice delle singole pagine -->
-            <div class="main-content-area" id="main-container">
-                <main layout:fragment="content"></main>
-            </div>
+    <!-- Contenuto Principale: qui verrà iniettato il codice delle singole pagine -->
+    <div class="main-content-area" id="main-container">
+        <main layout:fragment="content"></main>
+    </div>
 
-            <!-- Sezione Footer (sostituibile se necessario) -->
-            <th:block layout:fragment="footer">
-                <th:block th:replace="~{site01/fragments/footer :: footer}"></th:block>
-            </th:block>
-            
-        </div>
+    <!-- Sezione Footer (sostituibile se necessario) -->
+    <th:block layout:fragment="footer">
+        <th:block th:replace="~{site01/fragments/footer :: footer}"></th:block>
+    </th:block>
 
-        <!-- Script JS e Scroll to top -->
-        <th:block layout:fragment="scripts">
-            <th:block th:replace="~{site01/fragments/scripts :: scripts}"></th:block>
-        </th:block>
+</div>
 
-    </body>
+<!-- Banner cookie (stile Educeet) -->
+<div class="sd-cookie" id="sdCookie" role="dialog" aria-live="polite" aria-label="Informativa sui cookie">
+    <h5 class="sd-cookie-title">Cookie</h5>
+    <p class="sd-cookie-text">
+        Questo sito utilizza solo cookie tecnici, necessari al suo funzionamento.
+        Non usiamo cookie di profilazione.
+        <a th:href="@{/front/804/Cookie-Policy}">Leggi la Cookie Policy</a>
+    </p>
+    <a href="#" role="button" class="it-btn-yellow theme-bg" id="sdCookieOk">
+                <span>
+                    <span class="text-1">Ho capito</span>
+                    <span class="text-2">Ho capito</span>
+                </span>
+    </a>
+</div>
+
+<!-- Script JS e Scroll to top -->
+<th:block layout:fragment="scripts">
+    <th:block th:replace="~{site01/fragments/scripts :: scripts}"></th:block>
+</th:block>
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function () {
+            var w = document.getElementById('sdcpWidget');
+            if (w) w.classList.add('sdcp-visible');
+        }, 2500);
+
+        // Banner cookie: si mostra solo se non è già stato accettato (6 mesi)
+        var box = document.getElementById('sdCookie');
+        var ok = document.getElementById('sdCookieOk');
+        if (box && ok) {
+            var giaAccettato = document.cookie.split(';').some(function (c) {
+                return c.trim().indexOf('sd_cookie_ok=') === 0;
+            });
+            if (!giaAccettato) {
+                setTimeout(function () { box.classList.add('sd-cookie-visible'); }, 800);
+            }
+            ok.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.cookie = 'sd_cookie_ok=1; max-age=15552000; path=/; SameSite=Lax';
+                box.classList.remove('sd-cookie-visible');
+            });
+        }
+    });
+</script>
+
 </html>

@@ -282,12 +282,13 @@
 
     <!-- ═══ SIDEBAR (desktop) ═══ -->
     <div class="mail-sidebar">
-      <a th:href="@{/admin/email/componi/{id}(id=${currentAccountId})}"
+      <a th:if="${currentAccountId != null}"
+         th:href="@{/admin/email/componi/{id}(id=${currentAccountId})}"
          class="mail-compose-btn">
         <i class="ti ti-pencil"></i> Scrivi
       </a>
 
-      <div class="mail-nav-section">
+      <div class="mail-nav-section" th:if="${currentAccountId != null}">
         <div class="mail-nav-label">Cartelle</div>
         <a th:href="@{/admin/email/{id}/cartella/INBOX(id=${currentAccountId})}"
            th:classappend="${folderAttivo == 'INBOX' or folderAttivo == null} ? ' active' : ''"
@@ -338,7 +339,7 @@
     <div class="mail-main">
 
       <!-- Top bar mobile -->
-      <div class="mail-mobile-topbar">
+      <div class="mail-mobile-topbar" th:if="${currentAccountId != null}">
         <a th:href="@{/admin/email/componi/{id}(id=${currentAccountId})}"
            class="btn btn-primary btn-sm">
           <i class="ti ti-pencil me-1"></i> Scrivi
@@ -368,7 +369,7 @@
       </div>
 
       <!-- Toolbar -->
-      <div class="mail-toolbar">
+      <div class="mail-toolbar" th:if="${currentAccountId != null}">
         <input type="checkbox" class="form-check-input chSel_all inpt_c2"
                style="width:15px;height:15px;accent-color:#0088cc;cursor:pointer"/>
 
@@ -393,7 +394,7 @@
       <div th:if="${erroreMailer != null}" class="mail-alert">
         <i class="ti ti-alert-triangle"></i>
         <span th:switch="${erroreMailer}">
-          <span th:case="'configurazione_assente'">Nessun account email configurato.</span>
+          <span th:case="'configurazione_assente'">Nessun account email associato al tuo utente. Vai in Amministratori, apri il tuo profilo e associa un account email.</span>
           <span th:case="'parametri_errati'">Parametri account email incompleti o errati.</span>
           <span th:case="'autenticazione_fallita'">Autenticazione fallita.</span>
           <span th:case="'errore_connessione'">Impossibile connettersi al server email.</span>
@@ -402,7 +403,7 @@
       </div>
 
       <!-- Header lista -->
-      <div class="mail-list-header">
+      <div class="mail-list-header" th:if="${currentAccountId != null}">
         <span style="margin-left:27px">Mittente</span>
         <span style="margin-left:auto;margin-right:8px">Data</span>
       </div>
@@ -410,7 +411,7 @@
       <!-- Lista email -->
       <div class="mail-list" id="mailList">
 
-        <div th:if="${#lists.isEmpty(listaEmailArrivo)}" class="mail-empty">
+        <div th:if="${currentAccountId != null and #lists.isEmpty(listaEmailArrivo)}" class="mail-empty">
           <i class="ti ti-mail-opened"></i>
           <p>Nessun messaggio in arrivo</p>
         </div>

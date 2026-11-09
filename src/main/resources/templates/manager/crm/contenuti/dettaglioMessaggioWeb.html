@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="it"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{manager/layout/template}">
+<body>
+
+<div layout:fragment="content">
+
+  <form th:action="@{/admin/crm/lead/messaggio/{id}/save(id=${messaggio.id})}"
+        th:object="${messaggio}"
+        method="post"
+        id="messaggioweb"
+        class="form-bordered">
+
+    <header class="page-header mb-4">
+      <div class="d-flex align-items-center w-100">
+        <div class="title-container">
+          <h2 style="border-left: 5px solid #0088cc; padding-left: 15px; margin: 0; white-space: nowrap;">
+            Dettaglio messaggio WEB
+          </h2>
+        </div>
+        <div class="right-wrapper text-right" style="margin-left: auto; margin-right: 10%; margin-bottom: 20px;">
+          <a th:href="@{/admin/crm/lead/new/commenti/{id}(id=${messaggio.id})}"
+             class="mb-1 mt-1 mr-1 btn btn-sm btn-warning">
+            <i class="fas fa-user-plus"></i> <span class="btn-text">Profila LEAD per utente</span>
+          </a>
+          <button type="button"
+                  onclick="inviaForm(event)"
+                  class="mb-1 mt-1 mr-1 btn btn-sm btn-primary">
+            <i class="fas fa-save"></i> <span class="btn-text">Salva</span>
+          </button>
+          <a th:href="@{/admin/crm/lead}"
+             class="mb-1 mt-1 mr-1 btn btn-sm btn-danger">
+            <i class="fas fa-times-circle"></i> <span class="btn-text">Esci</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="row" style="margin-top: -25px">
+      <div class="col-lg-12">
+        <div class="card shadow-sm border-0" style="border-radius: 15px; background: #fff; padding: 20px;">
+
+          <h5 class="mb-3" th:text="'Dati Mittente ID ' + ${messaggio.id}">Dati Mittente</h5>
+
+          <p class="text-muted small mb-3">
+            <strong>Tipologia:</strong> Richiesta informazioni dal sito (form contatti)
+            <span th:if="${messaggio.contenuto != null}">
+              — <strong>Pagina collegata:</strong>
+              <a th:href="@{/admin/contenuti/{id}(id=${messaggio.contenuto.id})}"
+                 th:text="${messaggio.contenuto.titolo}">Titolo pagina</a>
+            </span>
+          </p>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nome</label>
+              <input type="text" class="form-control" th:field="*{nome}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Cognome</label>
+              <input type="text" class="form-control" th:field="*{cognome}">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="text" class="form-control" th:field="*{email}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Data</label>
+              <input type="text" class="form-control" th:field="*{data}" readonly>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Stato</label>
+              <select class="form-control" th:field="*{stato}">
+                <option value="0">Da gestire</option>
+                <option value="1">Letto</option>
+                <option value="2">Profilato in Lead</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Telefono</label>
+              <input type="text" class="form-control" th:field="*{l1}">
+            </div>
+          </div>
+
+          <h5 class="mt-4 mb-2">Messaggio</h5>
+          <textarea class="form-control" rows="10" th:field="*{messaggio}"></textarea>
+
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <script th:inline="javascript">
+    function inviaForm(e) {
+        if (e) e.preventDefault();
+        var form = document.getElementById('messaggioweb');
+
+        if (typeof tinymce !== 'undefined') {
+            try {
+                if (typeof tinymce.triggerSave === 'function') {
+                    tinymce.triggerSave();
+                } else if (tinymce.editors && tinymce.editors.length > 0) {
+                    tinymce.editors.forEach(function(editor) { editor.save(); });
+                }
+            } catch(err) { console.warn('TinyMCE save error:', err); }
+        }
+
+        form.submit();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof initTinyMCE === 'function') {
+            initTinyMCE('#messaggio');
+        }
+    });
+  </script>
+
+</div>
+</body>
+</html>

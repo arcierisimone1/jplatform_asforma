@@ -1,33 +1,20 @@
-<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="head_social">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" th:content="${config.sito.type}" />
-    <meta name="twitter:creator" th:content="${config.sito.type}" />
-    <meta name="twitter:title"
-          th:content="${config.sito.type} + ': ' + ${config.breadcrumb}" />
-    <meta name="twitter:description"
-          th:content="${config.breadcrumb}" />
-
-    <meta name="twitter:image"
-          th:content="@{'/' + ${config.sito.path2} + '/assets/logo_principale.png'}" />
-
-    <!-- Facebook / Open Graph -->
-    <meta property="og:url" th:content="@{/}" />
-    <meta property="og:title"
-          th:content="${config.sito.type} + ' | ' + ${config.breadcrumb}" />
-    <meta property="og:description"
-          th:content="${config.breadcrumb}" />
-    <meta property="og:type" content="website" />
-
-    <meta property="og:image"
-          th:content="@{'/' + ${config.sito.path2} + '/assets/logo_principale.png'}" />
-
-    <meta property="og:image:secure_url"
-          th:content="@{'/' + ${config.sito.path2} + '/assets/logo_principale.png'}" />
-
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="400" />
-    <meta property="og:image:height" content="400" />
-
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="shareBar(url, title)">
+    <div class="share-bar d-flex" style="gap:12px;">
+        <a th:href="'https://www.facebook.com/sharer/sharer.php?u=' + ${#uris.escapeQueryParam(url)}"
+           target="_blank" rel="noopener" aria-label="Condividi su Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+        </a>
+        <a href="javascript:void(0)" aria-label="Copia link per Instagram" th:attr="data-url=${url}"
+           onclick="var i=this.querySelector('i'); navigator.clipboard.writeText(this.getAttribute('data-url')); i.classList.replace('fa-instagram','fa-check'); var el=this; setTimeout(function(){ el.querySelector('i').classList.replace('fa-check','fa-instagram'); }, 1500);">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a th:href="'https://www.linkedin.com/sharing/share-offsite/?url=' + ${#uris.escapeQueryParam(url)}"
+           target="_blank" rel="noopener" aria-label="Condividi su LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+        </a>
+        <a th:href="'mailto:?subject=' + ${#uris.escapeQueryParam(title)} + '&body=' + ${#uris.escapeQueryParam(url)}"
+           aria-label="Condividi via email">
+            <i class="fa-solid fa-envelope"></i>
+        </a>
+    </div>
 </th:block>
