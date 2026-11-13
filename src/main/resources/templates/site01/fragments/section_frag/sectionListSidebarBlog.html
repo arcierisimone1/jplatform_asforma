@@ -3,10 +3,10 @@
 <body>
 <!-- sectionType.page3 = 'sectionListSidebarBlog' -->
 <th:block th:fragment="content">
-    <section class="pt-50">
+    <section class="pt-50 pb-50">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 pe-5 lg-pe-3 md-pe-15px md-mb-50">
+                <div class="col-12">
 
                     <div th:if="${section.testo != null and !section.testo.isEmpty()}" th:utext="${section.testo}" class="mb-40"></div>
 
@@ -17,8 +17,10 @@
                         .it-blog-item-equal .it-blog-title { overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
                         .it-blog-item-equal .it-blog-btn { margin-top: auto; }
                     </style>
+
+                    <!-- 3 colonne su desktop (col-lg-4), 2 su tablet (col-md-6), 1 su mobile -->
                     <div class="row gx-35" th:if="${section.hasContenuti()}">
-                        <div class="col-lg-6 col-md-6 d-flex mb-3" th:each="articolo : ${section.contenuti}">
+                        <div class="col-lg-4 col-md-6 d-flex mb-3" th:each="articolo : ${section.contenuti}">
                             <div class="it-blog-item it-blog-item-equal mb-35">
                                 <div class="it-blog-thumb border-radius-20 mb-30 p-relative">
                                     <a th:href="@{'/' + ${articolo.url}}">
@@ -26,14 +28,14 @@
                                     </a>
                                 </div>
                                 <div class="it-blog-content">
-                                    <div class="it-blog-meta mb-25" th:if="${articolo.dataVisualizzata != null}">
-                                        <span th:text="${articolo.dataVisualizzata}">Data</span>
+                                    <div class="it-blog-meta mb-20" th:if="${articolo.dataVisualizzata != null and !articolo.dataVisualizzata.isEmpty()}">
+                                        <span><i class="fa-solid fa-calendar-days"></i> <span th:text="${articolo.dataVisualizzata}">Data</span></span>
                                     </div>
                                     <h5 class="it-blog-title mb-15">
                                         <a class="border-line" th:href="@{'/' + ${articolo.url}}" th:text="${articolo.titolo}">Titolo</a>
                                     </h5>
                                     <div class="mb-20" th:if="${articolo.riassunto != null}" th:utext="${articolo.riassunto}"
-                                       style="overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;">Riassunto</div>
+                                         style="overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;">Riassunto</div>
                                     <div class="it-blog-btn">
                                         <a th:href="@{'/' + ${articolo.url}}" class="it-btn-yellow p-1">
                                             <span><span class="text-1">Leggi la notizia</span><span class="text-2">Leggi la notizia</span></span>
@@ -46,10 +48,6 @@
 
                     <div th:replace="~{site01/fragments/section_frag/_pagination :: nav}"></div>
 
-                </div>
-
-                <div class="col-lg-4 ps-4 lg-ps-15px">
-                    <div th:replace="~{site01/fragments/section_frag/_sidebar :: widget}"></div>
                 </div>
             </div>
         </div>

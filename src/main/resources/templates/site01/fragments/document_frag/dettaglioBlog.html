@@ -1,17 +1,106 @@
 <th:block th:fragment="content">
   <!-- Content -->
-  <section id="page-content">
+  <section id="page-content" class="pt-50 pb-50">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
+
+      <div class="row g-5 align-items-start">
+
+        <!-- COLONNA SINISTRA: IMMAGINE -->
+        <div class="col-lg-6">
+          <div style="position:sticky; top:120px;">
+
+            <!-- Carosello se più di 1 immagine -->
+            <div th:if="${post.gallery != null and post.gallery.size() > 1}">
+              <div id="galleriaArticolo" class="carousel slide border-radius-20 overflow-hidden">
+                <div class="carousel-inner">
+                  <div class="carousel-item" th:each="immagine, iter : ${post.gallery}" th:classappend="${iter.first} ? ' active'">
+                    <img th:src="${config.imagesRepositoryWeb + immagine.fullpath}" th:alt="${post.titolo}" class="w-100"/>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#galleriaArticolo" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Precedente</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#galleriaArticolo" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Successiva</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Immagine singola -->
+            <div th:if="${post.gallery != null and post.gallery.size() == 1}">
+              <img th:src="${config.imagesRepositoryWeb + post.gallery[0].fullpath}" th:alt="${post.titolo}" class="w-100 border-radius-20"/>
+            </div>
+
+            <!-- Logo se non ci sono immagini -->
+            <div th:if="${(post.gallery == null or post.gallery.isEmpty()) and post.logo != null and !post.logo.isEmpty()}">
+              <img th:src="${config.imagesRepositoryWeb + post.logo}" th:alt="${post.titolo}" class="w-100 border-radius-20"/>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- COLONNA DESTRA: TESTO -->
+        <div class="col-lg-6">
+
+          <div class="it-blog-meta mb-25" th:if="${post.creato != null and !post.creato.isEmpty()}">
+            <span style="display:inline-flex;align-items:center;gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M3 9h18" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <span th:text="${post.creato.substring(0,10)}">Data</span>
+            </span>
+          </div>
+
           <div th:utext="${content.testo}"></div>
+
+          <!-- Documenti -->
+          <div th:if="${post.allegati != null and !post.allegati.isEmpty()}" class="sidebar-widget mt-30 mb-30" style="padding:25px 30px;">
+            <h5 class="sidebar-widget-title mb-20">Documenti</h5>
+            <ul class="list-unstyled mb-0">
+              <li th:each="allegato : ${post.allegati}" class="pb-15 mb-15" style="border-bottom:1px solid rgba(0,0,0,.08);">
+                <a th:href="@{'/filesId/' + ${allegato.id} + '/' + ${allegato.l2} + '/' + ${allegato.l1} + '.' + ${allegato.type}}"
+                   th:download="${allegato.l1 + '.' + allegato.type}">
+                  <img th:src="@{|/${config.sito.path2}/jsp/icons/32/${allegato.typeIcon}.png|}" alt="" style="margin-right:14px; width:20px; height:20px; object-fit:contain; flex-shrink:0; vertical-align:middle;"/>
+                  <span th:text="${allegato.l1}">Nome file</span>
+                  <span style="font-size:14px; margin-left:5px;" th:text="'(' + ${allegato.sizeKB} + ' Kb)'">(0 Kb)</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Data aggiornamento + condivisione -->
+          <div class="it-blog-meta mt-30 mb-15"
+               th:if="${post.modificato != null and !post.modificato.isEmpty()}">
+            <div class="d-flex justify-content-between align-items-center flex-wrap" style="gap:12px;">
+              <span>
+                <i class="fa-solid fa-calendar-days"></i>
+                Aggiornato il
+                <a th:text="${post.modificato.substring(0,10)}">Data</a>
+              </span>
+              <th:block th:replace="~{site01/fragments/head_social_home :: shareBar(${currentUrl}, ${post.titolo})}"></th:block>
+            </div>
+          </div>
+
         </div>
       </div>
+
+      <!-- Precedente / Successivo (a tutta larghezza, sotto le due colonne) -->
+      <div class="mt-40 pt-25 d-flex justify-content-between align-items-center flex-wrap gap-3"
+           style="border-top:1px solid rgba(0,0,0,.08);">
+        <a th:if="${contenutoPrecedente != null}" th:href="@{'/' + ${contenutoPrecedente.url}}" class="it-btn-border">
+          <i class="fa-solid fa-arrow-left" style="margin-right:8px;"></i>Precedente
+        </a>
+        <span th:unless="${contenutoPrecedente != null}"></span>
+        <a th:if="${contenutoSuccessivo != null}" th:href="@{'/' + ${contenutoSuccessivo.url}}" class="it-btn-border">
+          Successivo<i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i>
+        </a>
+      </div>
+
     </div>
   </section>
   <!-- end: Content -->
 </th:block>
-
-
-
-

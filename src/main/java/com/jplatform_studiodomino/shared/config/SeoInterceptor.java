@@ -1,6 +1,5 @@
-package com.jplatform_studiodomino.config;
+package com.jplatform_studiodomino.shared.config;
 
-import com.jplatform_studiodomino.shared.config.Configurazione;
 import com.jplatform_studiodomino.shared.dto.SeoMetadata;
 import com.jplatform_studiodomino.shared.service.SeoJsonLdService;
 import com.jplatform_studiodomino.shared.service.SeoService;

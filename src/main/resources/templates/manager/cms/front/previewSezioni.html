@@ -160,7 +160,8 @@
 
                             <h5 class="mb-3">
                                 Titolo sezione:
-                                <strong th:text="${previewSezione != null ? previewSezione.titolo : ''}"></strong>
+                                <strong id="titoloSezioneLabel" th:text="${previewSezione != null ? previewSezione.titolo : ''}"></strong>
+                                <span id="autosaveStato" class="ms-2"></span>
                             </h5>
 
                             <form th:if="${previewSezione != null}"
@@ -606,23 +607,62 @@
         }
     </script>
 
-    <script>
-        if (typeof $ !== 'undefined' && typeof $.fn.autoSaveForm !== 'undefined') {
-          $(function () {
-            var $form = $('form');
-            var $formStatusHolder = $('.notifyZone');
-            $form.autoSaveForm();
-            $form.on('beforeSave.autoSaveForm', function (ev, $form, xhr) {
-              var formx = $("#sezione");
-              if (formx.length && formx[0].checkValidity() === false) {
-                new PNotify({title: 'Attenzione!', text: 'Alcuni campi obbligatori richiedono un tuo intervento!', type: 'error'});
-                return false;
-              }
-            });
-            $form.on('saveError.autoSaveForm', function () { $formStatusHolder.html('Errore nel salvataggio automatico.'); });
-            $form.on('saveSuccess.autoSaveForm', function () { new PNotify({title: 'Ho fatto!', text: 'Modifiche memorizzate!', type: 'success'}); });
-          });
-        }
+    <script th:inline="javascript">
+        (function () {
+            var form = document.getElementById('sezione');
+            if (!form) return;
+
+            var idSezione = /*[[${previewSezione != null ? previewSezione.id : 0}]]*/ 0;
+            var box = document.getElementById('autosaveStato');
+            var label = document.getElementById('titoloSezioneLabel');
+            var timer = null, inCorso = false, inCoda = false;
+
+            function campo(n) { return form.elements[n] ? form.elements[n].value : ''; }
+            function mostra(html) { if (box) box.innerHTML = html; }
+
+            function salva() {
+                if (inCorso) { inCoda = true; return; }
+                if (!campo('titolo').trim()) {
+                    mostra('<span class="text-danger small">Titolo obbligatorio: non salvato</span>');
+                    return;
+                }
+                inCorso = true;
+                mostra('<span class="text-primary small"><i class="fas fa-sync fa-spin me-1"></i>Salvataggio...</span>');
+
+                var body = new URLSearchParams();
+                body.append('titolo', campo('titolo'));
+                body.append('data',   campo('data'));
+                body.append('stato',  campo('stato'));
+                body.append('idType', campo('idType'));
+
+                fetch('/admin/sezioni/' + idSezione + '/autosave', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: body
+                })
+                .then(function (r) { return r.json(); })
+                .then(function (d) {
+                    if (d.esito === 'OK') {
+                        if (label) label.textContent = campo('titolo');
+                        mostra('<span class="text-success small"><i class="fas fa-check-circle me-1"></i>Salvato alle '
+                               + new Date().toLocaleTimeString() + '</span>');
+                    } else {
+                        mostra('<span class="text-danger small">' + (d.messaggio || 'Errore nel salvataggio') + '</span>');
+                    }
+                })
+                .catch(function () { mostra('<span class="text-danger small">Errore di connessione</span>'); })
+                .finally(function () {
+                    inCorso = false;
+                    if (inCoda) { inCoda = false; salva(); }
+                });
+            }
+
+            // Testo: salva 1 secondo dopo che smetti di scrivere. Select/data: salva subito.
+            form.addEventListener('input',  function () { clearTimeout(timer); timer = setTimeout(salva, 1000); });
+            form.addEventListener('change', function () { clearTimeout(timer); salva(); });
+            // Invio nel campo titolo: niente submit classico verso /save, solo autosave
+            form.addEventListener('submit', function (e) { e.preventDefault(); salva(); });
+        })();
     </script>
 
 </div>

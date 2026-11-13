@@ -122,14 +122,14 @@
                                         <li class="menu-item" th:if="${sezione.menu1.toString() == '1'}">
                                             <a th:if="${sezione.menu2.toString() == '0'}" th:href="@{'/' + ${sezione.url}}" th:text="${sezione.titolo}">Titolo</a>
                                             <a th:if="${sezione.menu2.toString() == '1'}" href="javascript:void(0)" th:text="${sezione.titolo}">Titolo</a>
-                                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" target="_blank" th:text="${sezione.menu4}">Titolo</a>
+                                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" th:target="${sezione.id == 809 ? '_self' : '_blank'}" th:text="${sezione.menu4}">Titolo</a>
                                         </li>
 
                                         <!-- MENU1=2: dropdown normale, fino a 4 livelli -->
                                         <li class="has-dropdown" th:if="${sezione.menu1.toString() == '2'}">
                                             <a th:if="${sezione.menu2.toString() == '0'}" th:href="@{'/' + ${sezione.url}}" th:text="${sezione.titolo}">Titolo</a>
                                             <a th:if="${sezione.menu2.toString() == '1'}" href="javascript:void(0)" th:text="${sezione.titolo}">Titolo</a>
-                                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" target="_blank" th:text="${sezione.menu4}">Titolo</a>
+                                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" th:target="${sezione.id == 809 ? '_self' : '_blank'}" th:text="${sezione.menu4}">Titolo</a>
 
                                             <ul class="it-submenu submenu" th:if="${sezione.subsection != null and !sezione.emptySubsection}">
                                                 <th:block th:each="sezione2 : ${sezione.subsection}" th:if="${sezione2.menu1.toString() != '0'}">
@@ -166,7 +166,7 @@
                                         <li class="has-dropdown p-static" th:if="${sezione.menu1.toString() == '3'}">
                                             <a th:if="${sezione.menu2.toString() == '0'}" th:href="@{'/' + ${sezione.url}}" th:text="${sezione.titolo}">Titolo</a>
                                             <a th:if="${sezione.menu2.toString() == '1'}" href="javascript:void(0)" th:text="${sezione.titolo}">Titolo</a>
-                                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" target="_blank" th:text="${sezione.menu4}">Titolo</a>
+                                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" th:target="${sezione.id == 809 ? '_self' : '_blank'}" th:text="${sezione.menu4}">Titolo</a>
 
                                             <div class="it-submenu submenu it-megamenu-wrap" th:if="${sezione.subsection != null and !sezione.emptySubsection}"
                                                  style="position:absolute; left:0; right:0; top:100%; width:100%; max-width:1320px; margin:0 auto; padding:40px; background:#fff; box-shadow:0 20px 40px rgba(0,0,0,0.12); z-index:99;">
@@ -198,7 +198,7 @@
                                         <li class="has-dropdown p-static" th:if="${sezione.menu1.toString() == '4'}">
                                             <a th:if="${sezione.menu2.toString() == '0'}" th:href="@{'/' + ${sezione.url}}" th:text="${sezione.titolo}">Titolo</a>
                                             <a th:if="${sezione.menu2.toString() == '1'}" href="javascript:void(0)" th:text="${sezione.titolo}">Titolo</a>
-                                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" target="_blank" th:text="${sezione.menu4}">Titolo</a>
+                                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" th:target="${sezione.id == 809 ? '_self' : '_blank'}" th:text="${sezione.menu4}">Titolo</a>
 
                                             <div class="it-submenu submenu has-home-img" th:if="${sezione.subsection != null and !sezione.emptySubsection}"
                                                  style="width:1600px; left:50%; right:auto; margin:0; transform:translateX(-50%);">
@@ -296,7 +296,7 @@
                 </button>
             </div>
             <div class="itoffcanvas__logo">
-                <a th:href="@{/}"><img th:src="@{/site01/images/logo_principale.png}" alt="Studiodomino Formazione"/></a>
+                <a th:href="@{/}"><img th:src="@{/site01/images/ASFORMA.png}" alt="As Forma"/></a>
             </div>
             <div class="itoffcanvas__text">
                 <p>
@@ -313,14 +313,14 @@
                         <li class="menu-item" th:if="${sezione.menu1.toString() == '1'}">
                             <a th:if="${sezione.menu2.toString() == '0'}" th:href="@{'/' + ${sezione.url}}" th:text="${sezione.titolo}">Titolo</a>
                             <a th:if="${sezione.menu2.toString() == '1'}" href="javascript:void(0)" th:text="${sezione.titolo}">Titolo</a>
-                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" target="_blank" th:text="${sezione.menu4}">Titolo</a>
+                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" th:target="${sezione.id == 809 ? '_self' : '_blank'}" th:text="${sezione.menu4}">Titolo</a>
                         </li>
 
                         <!-- MENU1=2: dropdown, fino a 4 livelli appiattiti -->
                         <li class="has-dropdown" th:if="${sezione.menu1.toString() == '2'}">
                             <a th:if="${sezione.menu2.toString() == '0'}" th:href="@{'/' + ${sezione.url}}" th:text="${sezione.titolo}">Titolo</a>
                             <a th:if="${sezione.menu2.toString() == '1'}" href="javascript:void(0)" th:text="${sezione.titolo}">Titolo</a>
-                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" target="_blank" th:text="${sezione.menu4}">Titolo</a>
+                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" th:target="${sezione.id == 809 ? '_self' : '_blank'}" th:text="${sezione.menu4}">Titolo</a>
 
                             <ul class="it-submenu submenu" th:if="${sezione.subsection != null and !sezione.emptySubsection}">
                                 <th:block th:each="sezione2 : ${sezione.subsection}" th:if="${sezione2.menu1.toString() != '0'}">
@@ -357,7 +357,7 @@
                         <li class="has-dropdown" th:if="${sezione.menu1.toString() == '3'}">
                             <a th:if="${sezione.menu2.toString() == '0'}" th:href="@{'/' + ${sezione.url}}" th:text="${sezione.titolo}">Titolo</a>
                             <a th:if="${sezione.menu2.toString() == '1'}" href="javascript:void(0)" th:text="${sezione.titolo}">Titolo</a>
-                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" target="_blank" th:text="${sezione.menu4}">Titolo</a>
+                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" th:target="${sezione.id == 809 ? '_self' : '_blank'}" th:text="${sezione.menu4}">Titolo</a>
 
                             <ul class="it-submenu submenu" th:if="${sezione.subsection != null and !sezione.emptySubsection}">
                                 <th:block th:each="sezione2 : ${sezione.subsection}" th:if="${sezione2.menu1.toString() == '3'}">
@@ -380,7 +380,7 @@
                         <li class="has-dropdown" th:if="${sezione.menu1.toString() == '4'}">
                             <a th:if="${sezione.menu2.toString() == '0'}" th:href="@{'/' + ${sezione.url}}" th:text="${sezione.titolo}">Titolo</a>
                             <a th:if="${sezione.menu2.toString() == '1'}" href="javascript:void(0)" th:text="${sezione.titolo}">Titolo</a>
-                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" target="_blank" th:text="${sezione.menu4}">Titolo</a>
+                            <a th:if="${sezione.menu2.toString() == '2'}" th:href="${sezione.menu3}" th:target="${sezione.id == 809 ? '_self' : '_blank'}" th:text="${sezione.menu4}">Titolo</a>
 
                             <ul class="it-submenu submenu" th:if="${sezione.subsection != null and !sezione.emptySubsection}">
                                 <th:block th:each="sezione2 : ${sezione.subsection}" th:if="${sezione2.menu1.toString() != '0'}">

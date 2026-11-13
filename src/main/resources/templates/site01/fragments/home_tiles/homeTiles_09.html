@@ -1,99 +1,101 @@
 <th:block xmlns:th="http://www.thymeleaf.org" th:fragment="homeTiles_09">
-    <section class="it-categories-area pt-40 pb-95">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="it-categories-section-title-box text-center mb-50">
-                        <span class="it-section-subtitle">L'associazione</span>
-                        <h4 class="it-section-title">Le nostre <span class="z-index-1">aree</span></h4>
+    <!-- "Le nostre aree": sottosezioni della sezione indicata in
+         Configurazione → Elementi comuni → slot #7 (es. ID di "Collabora").
+         Slot vuoto = sezione non mostrata in home. -->
+    <th:block th:with="idSezioneAree=${config != null and config.sito != null and config.sito.contenutiFront07 != null
+                         ? #strings.trim(#strings.replace(config.sito.contenutiFront07, ',', '')) : ''},
+                       aree=${!#strings.isEmpty(idSezioneAree)
+                         ? @contentService.findSubsections(config.sito.id.toString(), idSezioneAree) : null},
+                       icone=${ {'fa-user-graduate','fa-users','fa-diagram-project','fa-handshake','fa-lightbulb','fa-heart'} }">
+
+        <section class="it-categories-area pt-40 pb-95" th:if="${aree != null and !#lists.isEmpty(aree)}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="it-categories-section-title-box text-center mb-50">
+                            <span class="it-section-subtitle">L'associazione</span>
+                            <h4 class="it-section-title">Le nostre <span class="z-index-1">aree</span></h4>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .area-card {
+                        display: flex;
+                        flex-direction: column;
+                        height: 100%;
+                        padding: 32px 26px;
+                        background: #fff;
+                        border: 1px solid #e6e6e6;
+                        border-radius: 14px;
+                        text-decoration: none;
+                        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+                    }
+                    .area-card:hover {
+                        transform: translateY(-6px);
+                        box-shadow: 0 20px 40px rgba(1,6,20,0.10);
+                        border-color: transparent;
+                    }
+                    .area-card .icon-badge {
+                        width: 62px;
+                        height: 62px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 24px;
+                        color: #fff;
+                        background: var(--it-theme-1);
+                        margin-bottom: 20px;
+                        overflow: hidden;
+                    }
+                    .area-card .icon-badge img { width: 100%; height: 100%; object-fit: cover; }
+                    .area-card h6 {
+                        font-weight: 800;
+                        font-size: 17px;
+                        margin: 0 0 10px;
+                        color: var(--it-theme-3, #1a1a1a);
+                    }
+                    .area-card .area-desc {
+                        font-size: 14px;
+                        line-height: 1.6;
+                        color: #5c5c5c;
+                        margin: 0 0 18px;
+                        flex-grow: 1;
+                    }
+                    .area-card .area-desc p { margin: 0; }
+                    .area-card .cta {
+                        font-size: 13px;
+                        font-weight: 700;
+                        color: var(--it-theme-1);
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                    }
+                    .area-card .cta i { transition: transform .25s ease; }
+                    .area-card:hover .cta i { transform: translateX(4px); }
+                </style>
+
+                <div class="row gy-4 justify-content-center">
+                    <div class="col-lg-4 col-md-6" th:each="area, iter : ${aree}">
+                        <a th:href="@{'/' + ${area.url}}" class="area-card">
+                        <span class="icon-badge">
+                            <!-- Se la sottosezione ha un'immagine la usa, altrimenti un'icona a rotazione -->
+                            <img th:if="${area.logo != null and area.logo != 'nofoto.jpg'}"
+                                 th:src="${config.imagesRepositoryWeb + area.logo}" th:alt="${area.titolo}"/>
+                            <i th:unless="${area.logo != null and area.logo != 'nofoto.jpg'}"
+                               th:class="${'fa-solid ' + icone[iter.index % icone.size()]}"></i>
+                        </span>
+                            <h6 th:text="${area.titolo}">Area</h6>
+                            <div class="area-desc"
+                                 th:if="${area.riassunto != null and !area.riassunto.isEmpty()}"
+                                 th:utext="${area.riassunto}">Descrizione</div>
+                            <span class="cta">Scopri di più <i class="fa-solid fa-arrow-right"></i></span>
+                        </a>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <style>
-                .area-card {
-                    display: flex;
-                    flex-direction: column;
-                    height: 100%;
-                    padding: 32px 26px;
-                    background: #fff;
-                    border: 1px solid #e6e6e6;
-                    border-radius: 14px;
-                    text-decoration: none;
-                    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-                }
-                .area-card:hover {
-                    transform: translateY(-6px);
-                    box-shadow: 0 20px 40px rgba(1,6,20,0.10);
-                    border-color: transparent;
-                }
-                .area-card .icon-badge {
-                    width: 62px;
-                    height: 62px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 24px;
-                    color: #fff;
-                    background: var(--it-theme-1);
-                    margin-bottom: 20px;
-                }
-                .area-card h6 {
-                    font-weight: 800;
-                    font-size: 17px;
-                    margin: 0 0 10px;
-                    color: var(--it-theme-3, #1a1a1a);
-                }
-                .area-card p {
-                    font-size: 14px;
-                    line-height: 1.6;
-                    color: #5c5c5c;
-                    margin: 0 0 18px;
-                    flex-grow: 1;
-                }
-                .area-card .cta {
-                    font-size: 13px;
-                    font-weight: 700;
-                    color: var(--it-theme-1);
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 6px;
-                }
-                .area-card .cta i { transition: transform .25s ease; }
-                .area-card:hover .cta i { transform: translateX(4px); }
-            </style>
-
-            <div class="row gy-4">
-
-                <div class="col-lg-4 col-md-6">
-                    <a href="/front/800/Giovani" class="area-card">
-                        <span class="icon-badge"><i class="fa-solid fa-user-graduate"></i></span>
-                        <h6>Giovani</h6>
-                        <p>Attività dedicate a ragazzi e ragazze, tra crescita personale e socialità.</p>
-                        <span class="cta">Scopri di più <i class="fa-solid fa-arrow-right"></i></span>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <a href="/front/801/Famiglie" class="area-card">
-                        <span class="icon-badge"><i class="fa-solid fa-users"></i></span>
-                        <h6>Famiglie</h6>
-                        <p>Iniziative pensate per coinvolgere genitori e figli insieme.</p>
-                        <span class="cta">Scopri di più <i class="fa-solid fa-arrow-right"></i></span>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <a href="/front/802/Progetti" class="area-card">
-                        <span class="icon-badge"><i class="fa-solid fa-diagram-project"></i></span>
-                        <h6>Progetti</h6>
-                        <p>I nostri progetti: obiettivi, destinatari, partner e risultati.</p>
-                        <span class="cta">Scopri di più <i class="fa-solid fa-arrow-right"></i></span>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </section>
+    </th:block>
 </th:block>

@@ -419,6 +419,73 @@ public class SezioniController {
         }
     }
 
+    /**
+     * Autosave dalla preview: aggiorna SOLO i campi presenti nel form della preview
+     * (titolo, data, stato, tipo). Non passa da save() per non azzerare testo, menu, varchar ecc.
+     */
+    @PostMapping("/{id}/autosave")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> autosave(
+            @PathVariable Integer id,
+            @RequestParam(required = false) String titolo,
+            @RequestParam(required = false) String data,
+            @RequestParam(required = false) String stato,
+            @RequestParam(required = false) Integer idType,
+            HttpServletRequest request) {
+
+        Map<String, String> result = new java.util.HashMap<>();
+        Configurazione config = configurazioneService.getConfig(request.getSession());
+
+        if (!config.isLogged()) {
+            result.put("esito", "KO");
+            result.put("messaggio", "Sessione scaduta.");
+            return ResponseEntity.status(401).body(result);
+        }
+        if (titolo == null || titolo.isBlank()) {
+            result.put("esito", "KO");
+            result.put("messaggio", "Il titolo è obbligatorio.");
+            return ResponseEntity.badRequest().body(result);
+        }
+        if (stato == null || stato.isBlank() || idType == null) {
+            result.put("esito", "KO");
+            result.put("messaggio", "Seleziona stato e tipo sezione.");
+            return ResponseEntity.badRequest().body(result);
+        }
+
+        try {
+            String idSite = String.valueOf(config.getIdSito());
+            Section db = contentService.findSectionById(id, idSite).orElse(null);
+            if (db == null) {
+                result.put("esito", "KO");
+                result.put("messaggio", "Sezione non trovata.");
+                return ResponseEntity.status(404).body(result);
+            }
+
+            String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm"));
+            String operatore = config.getAmministratore().getNomeCompleto();
+
+            db.setTitolo(titolo.trim());
+            db.setData(data);
+            db.setStato(stato);
+            db.setIdType(idType);
+            db.setModificato(now);
+            db.setModificatoDa(operatore);
+
+            contentService.saveSection(db);
+
+            result.put("esito", "OK");
+            result.put("modificato", now);
+            result.put("modificatoDa", operatore);
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+            log.error("Errore autosave sezione id={}", id, e);
+            result.put("esito", "KO");
+            result.put("messaggio", "Errore durante il salvataggio.");
+            return ResponseEntity.internalServerError().body(result);
+        }
+    }
+
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Integer id, HttpServletRequest request,
                          RedirectAttributes redirectAttributes) {

@@ -1,24 +1,37 @@
-<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="head">
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="head" th:with="seo=${seo != null ? seo : @seoService.fallback()}">
 
     <!-- Studiodomino srl Basic Head -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta http-equiv="x-ua-compatible" content="IE=edge"/>
 
-    <title th:text="${(config != null && config.sito != null ? config.sito.type : '') +
-                  ' | ' +
-                  (post != null ? post.titolo : (section != null ? section.titolo : (pageTitle != null ? pageTitle : 'Home')))}">
-        Home
-    </title>
+    <title th:text="${seo.title}">Home</title>
+    <meta name="keywords" th:content="${config != null and config.sito != null ? config.sito.keywords : ''}"/>
+    <meta name="description" th:content="${seo.description}"/>
+    <link rel="canonical" th:href="${seo.canonicalUrl}"/>
+    <meta name="robots" th:content="${seo.indexable} ? 'index, follow' : 'noindex, follow'"/>
+    <meta name="author" content="Studiodomino srl - Potenza"/>
+    <meta name="DC.Description" th:content="${seo.title}"/>
 
-    <meta name="keywords" th:content="${config != null && config.sito != null ? config.sito.keywords : ''}" />
-    <meta name="description"
-          th:content="${(post != null and post.riassunto != null and !post.riassunto.isEmpty()) ? #strings.abbreviate(post.riassunto.replaceAll('&lt;[^&gt;]*&gt;', ' '), 160) :
-                        ((section != null and section.riassunto != null and !section.riassunto.isEmpty()) ? #strings.abbreviate(section.riassunto.replaceAll('&lt;[^&gt;]*&gt;', ' '), 160) :
-                        (config != null && config.sito != null ? config.sito.libero2 : ''))}" />
-    <meta name="author" content="Studiodomino srl"/>
-    <meta name="DC.Description" th:content="${post != null ? post.titolo : (section != null ? section.titolo : (pageTitle != null ? pageTitle : 'Home'))}"/>
-    <link rel="canonical" th:if="${currentUrl != null}" th:href="${currentUrl}" />
+    <!-- Open Graph: Facebook, LinkedIn, WhatsApp, Telegram -->
+    <meta property="og:type"        th:content="${seo.type}"/>
+    <meta property="og:title"       th:content="${seo.title}"/>
+    <meta property="og:description" th:content="${seo.description}"/>
+    <meta property="og:image"       th:content="${seo.image}"/>
+    <meta property="og:image:alt"   th:content="${seo.imageAlt}"/>
+    <meta property="og:url"         th:content="${seo.canonicalUrl}"/>
+    <meta property="og:site_name"   th:content="${seo.siteName}"/>
+    <meta property="og:locale"      content="it_IT"/>
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="summary_large_image"/>
+    <meta name="twitter:title"       th:content="${seo.title}"/>
+    <meta name="twitter:description" th:content="${seo.description}"/>
+    <meta name="twitter:image"       th:content="${seo.image}"/>
+
+    <!-- Mobile -->
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="format-detection" content="telephone=no"/>
 
     <!-- Favicons -->
     <link rel="icon" type="image/png"
@@ -33,12 +46,6 @@
           th:href="@{'/' + ${config.sito.path2} + '/assets/apple-touch-icon-114x114.png'}"/>
     <link rel="apple-touch-icon" sizes="144x144"
           th:href="@{'/' + ${config.sito.path2} + '/assets/apple-touch-icon-144x144.png'}"/>
-
-    <!-- Mobile Specific Metas -->
-    <meta name="HandheldFriendly" content="true" />
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="author" content="Studiodomino srl - Potenza"/>
-    <meta name="robots" content="index, follow"/>
 
     <!-- CSS (Educeet) -->
     <link rel="stylesheet" th:href="@{'/' + ${config.sito.path2} + '/assets/css/bootstrap.min.css'}">
@@ -59,5 +66,10 @@
     </style>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- JSON-LD: dati struttura organizzazione (Google Business, rich snippet) -->
+    <script type="application/ld+json" th:if="${orgJsonLd != null}" th:utext="${orgJsonLd}"></script>
+
+    <!-- JSON-LD: breadcrumb della pagina corrente -->
+    <script type="application/ld+json" th:if="${breadcrumbJsonLd != null}" th:utext="${breadcrumbJsonLd}"></script>
 
 </th:block>

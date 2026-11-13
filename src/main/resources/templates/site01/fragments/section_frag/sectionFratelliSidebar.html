@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- sectionType.page3 : elenco contenuti + foto, con sidebar delle SEZIONI SORELLE
+     (stesso padre) invece della sidebar standard. Se la sezione è di primo
+     livello e non ha sorelle, mostra la sidebar standard (_sidebar :: widget). -->
+<th:block th:fragment="content">
+    <section class="pt-50 pb-100">
+        <div class="container">
+            <div class="row gx-35">
+
+                <!-- CONTENUTO -->
+                <div class="col-lg-8">
+
+                    <div th:if="${section.testo != null and !section.testo.isEmpty()}" th:utext="${section.testo}" class="mb-40"></div>
+
+                    <div th:if="${section.hasContenuti()}">
+                        <div class="postbox-thumb-box mb-70" th:each="articolo : ${section.contenuti}">
+                            <div class="postbox-main-thumb border-radius-20 mb-35" th:if="${articolo.logo != null and !articolo.logo.isEmpty()}">
+                                <a th:href="@{'/' + ${articolo.url}}">
+                                    <img class="w-100" th:src="${config.imagesRepositoryWeb + articolo.logo}" th:alt="${articolo.titolo}"/>
+                                </a>
+                            </div>
+                            <div class="postbox-content-box">
+                                <div class="it-blog-meta mb-20" th:if="${articolo.dataVisualizzata != null and !articolo.dataVisualizzata.isEmpty()}">
+                                    <span><i class="fa-solid fa-calendar-days"></i> <span th:text="${articolo.dataVisualizzata}">Data</span></span>
+                                </div>
+                                <h4 class="it-section-title">
+                                    <a class="border-line" th:href="@{'/' + ${articolo.url}}" th:text="${articolo.titolo}">Titolo</a>
+                                </h4>
+                                <div class="postbox-dsc" th:if="${articolo.riassunto != null and !articolo.riassunto.isEmpty()}">
+                                    <div class="mb-25" th:utext="${articolo.riassunto}">Riassunto</div>
+                                </div>
+                                <a th:href="@{'/' + ${articolo.url}}" class="it-btn-yellow theme-bg">
+                                    <span>
+                                        <span class="text-1">Leggi di più</span>
+                                        <span class="text-2">Leggi di più</span>
+                                    </span>
+                                    <i><i class="fa-solid fa-arrow-right"></i></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:replace="~{site01/fragments/section_frag/_pagination :: nav}"></div>
+
+                </div>
+
+                <!-- SIDEBAR -->
+                <div class="col-lg-4">
+
+                    <!-- Sezioni sorelle (stesso padre) -->
+                    <div class="it-shop-sidebar position-sticky" style="top:100px;"
+                         th:if="${sezioniFratelli != null and !#lists.isEmpty(sezioniFratelli)}">
+                        <div class="sidebar-widget mb-60">
+                            <h4 class="sidebar-widget-title mb-25"
+                                th:text="${sezionePadre != null ? sezionePadre.titolo : 'In questa sezione'}">In questa sezione</h4>
+                            <div class="sidebar-widget-content">
+                                <ul style="list-style:none; padding:0; margin:0;">
+                                    <li th:each="sib : ${sezioniFratelli}"
+                                        th:if="${sib.id == section.id or sib.menu1.toString() != '0'}"
+                                        style="margin-bottom:15px;">
+                                        <a th:if="${sib.id != section.id}" class="sidebar-widget-list"
+                                           th:href="@{'/' + ${sib.url}}" th:text="${sib.titolo}">Sezione</a>
+                                        <a th:if="${sib.id == section.id}" class="sidebar-widget-list active"
+                                           th:href="@{'/' + ${sib.url}}" th:text="${sib.titolo}"
+                                           aria-current="page">Sezione corrente</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sezione di primo livello (nessuna sorella): sidebar standard -->
+                    <th:block th:unless="${sezioniFratelli != null and !#lists.isEmpty(sezioniFratelli)}">
+                        <div th:replace="~{site01/fragments/section_frag/_sidebar :: widget}"></div>
+                    </th:block>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</th:block>
+</body>
+</html>
